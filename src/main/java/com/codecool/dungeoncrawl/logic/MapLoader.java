@@ -22,6 +22,7 @@ public class MapLoader {
                 if (x < line.length()) {
                     Cell cell = map.getCell(x, y);
                     switch (line.charAt(x)) {
+                        // Collideables
                         case ' ':
                             cell.setType(CellType.EMPTY);
                             break;
@@ -31,7 +32,16 @@ public class MapLoader {
                         case '.':
                             cell.setType(CellType.FLOOR);
                             break;
-                        // enemies
+                        case 'D':
+                            cell.setType(CellType.DOOR1);
+                            break;
+                        case 'T':
+                            cell.setType(CellType.TREE);
+                            break;
+                        case '1':
+                            cell.setType(CellType.STATUE);
+                            break;
+                        // Enemies
                         case 's':
                             cell.setType(CellType.FLOOR);
                             map.setEnemy(new Enemy(cell, EnemyType.SKELETON));
@@ -44,24 +54,14 @@ public class MapLoader {
                             cell.setType(CellType.FLOOR);
                             map.setEnemy(new Enemy(cell, EnemyType.HELLBOY));
                             break;
+                        // Player
                         case '@':
                             cell.setType(CellType.FLOOR);
                             map.setPlayer(new Player(cell));
                             break;
-                        case 'D':
-                            cell.setType(CellType.DOOR1);
-                            break;
-                        case 'T':
-                            cell.setType(CellType.TREE);
-                            break;
-                        case '1':
-                            cell.setType(CellType.STATUE);
-                            break;
+                        // Keys
                         case 'K':
                             cell.setType(CellType.KEYLVL1);
-                            break;
-                        case 'M':
-                            cell.setType(CellType.KEYLVL2);
                             break;
                         default:
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");
