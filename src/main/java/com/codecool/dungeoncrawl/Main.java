@@ -3,6 +3,10 @@ package com.codecool.dungeoncrawl;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
+import com.codecool.dungeoncrawl.logic.actors.EnemyType;
+import com.codecool.dungeoncrawl.logic.actors.Player;
+import com.codecool.dungeoncrawl.logic.items.Item;
+import com.codecool.dungeoncrawl.logic.items.PotionType;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -16,6 +20,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.util.List;
+
 
 public class Main extends Application {
     GameMap map = MapLoader.loadMap();
@@ -24,6 +30,7 @@ public class Main extends Application {
             map.getHeight() * Tiles.TILE_WIDTH);
     GraphicsContext context = canvas.getGraphicsContext2D();
     Label healthLabel = new Label();
+    Label inventoryLabel = new Label();
 
     public static void main(String[] args) {
         launch(args);
@@ -42,11 +49,12 @@ public class Main extends Application {
         ui.add(new Label("Health: "), 0, 0);
         ui.add(healthLabel, 1, 0);
         ui.add(new Label("Inventory: "), 0, 2);
+        ui.add(inventoryLabel, 1, 2);
         ui.add(button, 0, 3);
+        button.setDisable(true);
 
-        // Handle Button event.
         button.setOnAction((event) -> {
-            System.out.println("Button Action");
+            Player.addItemToInventory(PotionType.EXTRA_HEALTH_POTION);
         });
 
         BorderPane borderPane = new BorderPane();
@@ -101,6 +109,11 @@ public class Main extends Application {
             }
         }
         healthLabel.setText("" + map.getPlayer().getHealth());
+        List<Item> fullInventory = map.getPlayer().getInventory();
+        for (Item item : fullInventory) {
+            inventoryLabel.setText("" + item.getTileName());
+        }
     }
 
 }
+
