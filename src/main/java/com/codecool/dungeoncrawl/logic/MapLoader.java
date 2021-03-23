@@ -1,7 +1,7 @@
 package com.codecool.dungeoncrawl.logic;
-
+import com.codecool.dungeoncrawl.logic.actors.EnemyType;
 import com.codecool.dungeoncrawl.logic.actors.Player;
-import com.codecool.dungeoncrawl.logic.actors.Skeleton;
+import com.codecool.dungeoncrawl.logic.actors.Enemy;
 
 import java.io.InputStream;
 import java.util.Scanner;
@@ -31,9 +31,18 @@ public class MapLoader {
                         case '.':
                             cell.setType(CellType.FLOOR);
                             break;
+                        // enemies
                         case 's':
                             cell.setType(CellType.FLOOR);
-                            new Skeleton(cell);
+                            map.setEnemy(new Enemy(cell, EnemyType.SKELETON));
+                            break;
+                        case 'm':
+                            cell.setType(CellType.FLOOR);
+                            map.setEnemy(new Enemy(cell, EnemyType.MONSTER));
+                            break;
+                        case 'h':
+                            cell.setType(CellType.FLOOR);
+                            map.setEnemy(new Enemy(cell, EnemyType.HELLBOY));
                             break;
                         case '@':
                             cell.setType(CellType.FLOOR);
@@ -44,6 +53,15 @@ public class MapLoader {
                             break;
                         case 'T':
                             cell.setType(CellType.TREE);
+                            break;
+                        case '1':
+                            cell.setType(CellType.STATUE);
+                            break;
+                        case 'K':
+                            cell.setType(CellType.KEYLVL1);
+                            break;
+                        case 'M':
+                            cell.setType(CellType.KEYLVL2);
                             break;
                         default:
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");

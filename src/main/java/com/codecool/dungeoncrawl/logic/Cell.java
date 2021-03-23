@@ -35,6 +35,10 @@ public class Cell implements Drawable {
         return gameMap.getCell(x + dx, y + dy);
     }
 
+    public void setItem(Item item) {
+        this.item = item;
+    }
+
     @Override
     public String getTileName() {
         return type.getTileName();

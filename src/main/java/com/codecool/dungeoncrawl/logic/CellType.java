@@ -1,11 +1,30 @@
 package com.codecool.dungeoncrawl.logic;
 
 public enum CellType {
-    EMPTY("empty"),
+
+    // can collide
     FLOOR("floor"),
-    WALL("wall"),
     DOOR1("caveentrance"),
-    TREE("tree");
+
+    // cannot collide
+    EMPTY("empty"),
+    WALL("wall"),
+    TREE("tree"),
+    STATUE("statue"),
+
+    // potions
+
+    FULLHP("fullpot"),
+
+    // items
+
+    // keys
+
+    KEYLVL1("key"),
+    KEYLVL2("key2"),
+    KEYLVL3("key2");
+
+
 
     private final String tileName;
 
@@ -16,4 +35,5 @@ public enum CellType {
     public String getTileName() {
         return tileName;
     }
+
 }
