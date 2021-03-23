@@ -26,8 +26,14 @@ public class Tiles {
         // Simple
         tileMap.put("empty", new Tile(0, 0)); // ' '
         tileMap.put("wall", new Tile(6, 19)); // #
+        tileMap.put("wall2", new Tile(44, 18)); // &
         tileMap.put("floor", new Tile(12, 9)); // .
-        tileMap.put("caveentrance", new Tile(46, 10)); // D
+        tileMap.put("floor2", new Tile(49, 6)); // _
+        tileMap.put("doorlvl1in", new Tile(36, 10)); // D
+        tileMap.put("doorlvl1out", new Tile(38, 10)); // U
+        tileMap.put("doorlvl2in", new Tile(46, 10)); // P
+        tileMap.put("doorlvl2out", new Tile(46, 10)); // O
+        tileMap.put("doorlvl3in", new Tile(46, 10)); // I
         tileMap.put("tree", new Tile(13, 13)); // T
         tileMap.put("statue", new Tile(27, 13)); // 1
         // Player

@@ -4,11 +4,14 @@ public enum CellType {
 
     // can collide
     FLOOR("floor"),
-    DOOR1("caveentrance"),
+    FLOOR2("floor2"),
+    DOOR1("doorlvl1in"),
+    DOOR2("doorlvl1out"),
 
     // cannot collide
     EMPTY("empty"),
     WALL("wall"),
+    WALL2("wall2"),
     TREE("tree"),
     STATUE("statue"),
 
