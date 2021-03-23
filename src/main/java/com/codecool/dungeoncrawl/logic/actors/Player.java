@@ -21,4 +21,9 @@ public class Player extends Actor {
     public List<Item> getInventory() {
         return inventory;
     }
+
+    public void addItemToInventory(Item item) {
+        inventory.add(item);
+
+    }
 }
