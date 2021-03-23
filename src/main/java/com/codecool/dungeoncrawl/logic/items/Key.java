@@ -4,13 +4,16 @@ import com.codecool.dungeoncrawl.logic.Cell;
 
 public class Key extends Item {
 
-    public Key(Cell cell) {
+    public final String KeyType;
+
+    public Key(Cell cell, KeyType type) {
         super(cell);
+        KeyType = type.getKeyName();
     }
 
     @Override
     public String getTileName() {
-        return "key";
+        return KeyType;
     }
 
 }

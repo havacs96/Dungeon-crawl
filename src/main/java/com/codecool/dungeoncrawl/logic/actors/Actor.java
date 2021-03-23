@@ -6,9 +6,9 @@ import com.codecool.dungeoncrawl.logic.Drawable;
 import java.util.Arrays;
 
 public abstract class Actor implements Drawable {
-    private Cell cell;
+    protected Cell cell;
     private int health = 10;
-    private final String[] notWalkable = {"wall", "tree", "statue", "empty"};
+
 
     public Actor(Cell cell) {
         this.cell = cell;
@@ -16,17 +16,6 @@ public abstract class Actor implements Drawable {
     }
 
     public void move(int dx, int dy) {
-        Cell nextCell = cell.getNeighbor(dx, dy);
-        if (Arrays.asList(notWalkable).contains(nextCell.getTileName())) {
-            return;
-        }
-        if (nextCell.getTileName().equals("caveentrance")){
-            //TODO hasKey();
-            return;
-        }
-        cell.setActor(null);
-        nextCell.setActor(this);
-        cell = nextCell;
     }
 
     public int getHealth() {
