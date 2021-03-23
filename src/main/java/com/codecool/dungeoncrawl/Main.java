@@ -39,6 +39,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+
         GridPane ui = new GridPane();
         Button button = new Button("Pick Up!");
 
@@ -62,11 +63,12 @@ public class Main extends Application {
         borderPane.setRight(ui);
 
         Scene scene = new Scene(borderPane);
+
         primaryStage.setScene(scene);
         refresh();
         scene.setOnKeyPressed(this::onKeyPressed);
 
-        primaryStage.setTitle("Dungeon Crawl");
+        primaryStage.setTitle("Dungeon Crawl by Code of the LordCool!");
         primaryStage.show();
     }
 

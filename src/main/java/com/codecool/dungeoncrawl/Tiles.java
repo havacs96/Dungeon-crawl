@@ -25,17 +25,26 @@ public class Tiles {
     static {
         // Simple
         tileMap.put("empty", new Tile(0, 0)); // ' '
+        // Walls
         tileMap.put("wall", new Tile(6, 19)); // #
         tileMap.put("wall2", new Tile(44, 18)); // &
+        tileMap.put("wall3", new Tile(34, 16)); // $
+        // Floors
         tileMap.put("floor", new Tile(12, 9)); // .
         tileMap.put("floor2", new Tile(49, 6)); // _
+        tileMap.put("floor3", new Tile(14, 3)); // ß
+        tileMap.put("lava", new Tile(63, 5)); // |
+        // Doors
         tileMap.put("doorlvl1in", new Tile(36, 10)); // D
         tileMap.put("doorlvl1out", new Tile(38, 10)); // U
-        tileMap.put("doorlvl2in", new Tile(46, 10)); // P
+        tileMap.put("doorlvl2in", new Tile(45, 11)); // P
         tileMap.put("doorlvl2out", new Tile(46, 10)); // O
-        tileMap.put("doorlvl3in", new Tile(46, 10)); // I
+        tileMap.put("doorlvl3in", new Tile(46, 11)); // I
+        // Others
         tileMap.put("tree", new Tile(13, 13)); // T
         tileMap.put("statue", new Tile(27, 13)); // 1
+        tileMap.put("altar", new Tile(45, 0)); // 2
+        tileMap.put("statue2", new Tile(40, 12)); // 3
         // Player
         tileMap.put("player", new Tile(19, 68)); // @
         // Enemies
