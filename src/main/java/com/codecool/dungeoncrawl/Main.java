@@ -6,6 +6,8 @@ import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actors.EnemyType;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.items.Item;
+import com.codecool.dungeoncrawl.logic.items.Key;
+import com.codecool.dungeoncrawl.logic.items.KeyType;
 import com.codecool.dungeoncrawl.logic.items.PotionType;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -31,6 +33,7 @@ public class Main extends Application {
     GraphicsContext context = canvas.getGraphicsContext2D();
     Label healthLabel = new Label();
     Label inventoryLabel = new Label();
+    Button button = new Button("Pick Up!");
 
     public static void main(String[] args) {
         launch(args);
@@ -41,7 +44,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         GridPane ui = new GridPane();
-        Button button = new Button("Pick Up!");
+
 
         ui.setPrefWidth(200);
         ui.setPadding(new Insets(10));
@@ -51,10 +54,11 @@ public class Main extends Application {
         ui.add(new Label("Inventory: "), 0, 2);
         ui.add(inventoryLabel, 1, 2);
         ui.add(button, 0, 3);
+
         button.setDisable(true);
 
         button.setOnAction((event) -> {
-            Player.addItemToInventory(PotionType.EXTRA_HEALTH_POTION);
+            map.getPlayer().addItemToInventory();
         });
 
         BorderPane borderPane = new BorderPane();
@@ -77,18 +81,30 @@ public class Main extends Application {
         switch (keyEvent.getCode()) {
             case UP:
                 map.getPlayer().move(0, -1);
+                if (map.getPlayer().isOnItem()) {
+                    button.setDisable(false);
+                }
                 refresh();
                 break;
             case DOWN:
                 map.getPlayer().move(0, 1);
+                if (map.getPlayer().isOnItem()) {
+                    button.setDisable(false);
+                }
                 refresh();
                 break;
             case LEFT:
                 map.getPlayer().move(-1, 0);
+                if (map.getPlayer().isOnItem()) {
+                    button.setDisable(false);
+                }
                 refresh();
                 break;
             case RIGHT:
                 map.getPlayer().move(1,0);
+                if (map.getPlayer().isOnItem()) {
+                    button.setDisable(false);
+                }
                 refresh();
                 break;
         }

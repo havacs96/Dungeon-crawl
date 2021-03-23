@@ -24,15 +24,12 @@ public enum CellType {
 
     // potions
 
-    FULLHP("fullpot"),
+    FULLHP("fullpot");
 
     // items
 
     // keys
 
-    KEYLVL1("key"),
-    KEYLVL2("key2"),
-    KEYLVL3("key2");
 
 
 

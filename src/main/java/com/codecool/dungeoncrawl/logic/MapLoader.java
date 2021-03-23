@@ -2,6 +2,9 @@ package com.codecool.dungeoncrawl.logic;
 import com.codecool.dungeoncrawl.logic.actors.EnemyType;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.actors.Enemy;
+import com.codecool.dungeoncrawl.logic.items.Item;
+import com.codecool.dungeoncrawl.logic.items.Key;
+import com.codecool.dungeoncrawl.logic.items.KeyType;
 
 import java.io.InputStream;
 import java.util.Scanner;
@@ -74,15 +77,15 @@ public class MapLoader {
                         // Enemies
                         case 's':
                             cell.setType(CellType.FLOOR);
-                            map.setEnemy(new Enemy(cell, EnemyType.SKELETON));
+                            new Enemy(cell, EnemyType.SKELETON);
                             break;
                         case 'm':
                             cell.setType(CellType.FLOOR);
-                            map.setEnemy(new Enemy(cell, EnemyType.MONSTER));
+                            new Enemy(cell, EnemyType.MONSTER);
                             break;
                         case 'h':
                             cell.setType(CellType.FLOOR);
-                            map.setEnemy(new Enemy(cell, EnemyType.HELLBOY));
+                            new Enemy(cell, EnemyType.HELLBOY);
                             break;
                         // Player
                         case '@':
@@ -90,8 +93,13 @@ public class MapLoader {
                             map.setPlayer(new Player(cell));
                             break;
                         // Keys
+                        case 'B':
+                            cell.setType(CellType.FLOOR);
+                            new Key(cell, KeyType.BRONZE_KEY);
+                            break;
                         case 'K':
-                            cell.setType(CellType.KEYLVL1);
+                            cell.setType(CellType.FLOOR);
+                            new Key(cell, KeyType.SILVER_KEY);
                             break;
                         default:
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");

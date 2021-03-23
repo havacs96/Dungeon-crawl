@@ -54,8 +54,8 @@ public class Tiles {
         tileMap.put("ghost", new Tile(24, 65)); // G
         // Keys
         tileMap.put("bronze", new Tile(55, 40)); // K
-        tileMap.put("silver", new Tile(56, 40)); // K
-        tileMap.put("gold", new Tile(56, 40)); // K
+        tileMap.put("silver", new Tile(56, 40)); // ?
+        tileMap.put("gold", new Tile(57, 40)); // ?
         // Items
         tileMap.put("crossbow", new Tile(16, 49)); // c
         tileMap.put("sword", new Tile(15, 48)); // s

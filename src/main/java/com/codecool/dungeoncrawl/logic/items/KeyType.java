@@ -8,7 +8,6 @@ public enum KeyType {
 
     private final String keyName;
 
-
     KeyType(String keyName) {
         this.keyName = keyName;
     }
