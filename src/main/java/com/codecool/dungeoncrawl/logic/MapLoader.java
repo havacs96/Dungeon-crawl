@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class MapLoader {
     public static GameMap loadMap() {
-        InputStream is = MapLoader.class.getResourceAsStream("/map2.txt");
+        InputStream is = MapLoader.class.getResourceAsStream("/map3.txt");
         Scanner scanner = new Scanner(is);
         int width = scanner.nextInt();
         int height = scanner.nextInt();
@@ -32,11 +32,20 @@ public class MapLoader {
                         case '&':
                             cell.setType(CellType.WALL2);
                             break;
+                        case '$':
+                            cell.setType(CellType.WALL3);
+                            break;
                         case '.':
                             cell.setType(CellType.FLOOR);
                             break;
                         case '_':
                             cell.setType(CellType.FLOOR2);
+                            break;
+                        case '|':
+                            cell.setType(CellType.LAVA);
+                            break;
+                        case 'ß':
+                            cell.setType(CellType.FLOOR3);
                             break;
                         case 'D':
                             cell.setType(CellType.DOOR1);
@@ -44,11 +53,23 @@ public class MapLoader {
                         case 'U':
                             cell.setType(CellType.DOOR2);
                             break;
+                        case 'P':
+                            cell.setType(CellType.DOOR3);
+                            break;
+                        case 'I':
+                            cell.setType(CellType.DOOR4);
+                            break;
                         case 'T':
                             cell.setType(CellType.TREE);
                             break;
                         case '1':
                             cell.setType(CellType.STATUE);
+                            break;
+                        case '3':
+                            cell.setType(CellType.STATUE2);
+                            break;
+                        case '2':
+                            cell.setType(CellType.ALTAR);
                             break;
                         // Enemies
                         case 's':
