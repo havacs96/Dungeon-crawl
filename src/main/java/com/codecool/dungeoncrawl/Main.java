@@ -22,6 +22,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -51,15 +53,20 @@ public class Main extends Application {
 
         ui.add(new Label("Health: "), 0, 0);
         ui.add(healthLabel, 1, 0);
-        ui.add(new Label("Inventory: "), 0, 2);
-        ui.add(inventoryLabel, 1, 2);
-        ui.add(button, 0, 3);
+        ui.add(new Label("Inventory: "), 0, 3);
+        ui.add(inventoryLabel, 0, 4);
+        ui.add(button, 0, 2);
 
         button.setDisable(true);
 
         button.setOnAction((event) -> {
             map.getPlayer().addItemToInventory();
             button.setDisable(true);
+            List<Item> fullInventory = map.getPlayer().getInventory();
+            inventoryLabel.setText("");
+            for (Item item : fullInventory) {
+                inventoryLabel.setText("" +inventoryLabel.getText() + "\n" + item.getTileName());
+            }
 
         });
 
@@ -127,11 +134,7 @@ public class Main extends Application {
             }
         }
         healthLabel.setText("" + map.getPlayer().getHealth());
-        List<Item> fullInventory = map.getPlayer().getInventory();
-        System.out.println(fullInventory);
-        for (Item item : fullInventory) {
-            inventoryLabel.setText("" + item.getTileName());
-        }
+
     }
 
 }
