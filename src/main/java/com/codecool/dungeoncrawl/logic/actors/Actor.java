@@ -7,7 +7,8 @@ import java.util.Arrays;
 
 public abstract class Actor implements Drawable {
     protected Cell cell;
-    private int health = 10;
+    private int health;
+    private int strength;
 
 
     public Actor(Cell cell) {
@@ -16,6 +17,18 @@ public abstract class Actor implements Drawable {
     }
 
     public void move(int dx, int dy) {
+    }
+
+    public int getStrength() {
+        return strength;
+    }
+
+    public void setStrength(int strength) {
+        this.strength = strength;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
     }
 
     public int getHealth() {

@@ -2,18 +2,18 @@ package com.codecool.dungeoncrawl.logic.actors;
 
 public enum EnemyType {
 
-    MONSTER("monster", 40, 300),
-    SKELETON("skeleton", 50, 400),
-    HELLBOY("hellboy", 100, 800);
+    MONSTER("monster", 10, 300),
+    SKELETON("skeleton", 20, 400),
+    HELLBOY("hellboy", 30, 800);
 
     private final String enemyName;
     private final int strength;
-    private final int healthPoints;
+    private final int health;
 
-    EnemyType(String enemyName, int strength, int healthPoints) {
+    EnemyType(String enemyName, int strength, int health) {
         this.enemyName = enemyName;
         this.strength = strength;
-        this.healthPoints = healthPoints;
+        this.health = health;
     }
 
     public String getEnemyName() {
@@ -24,8 +24,8 @@ public enum EnemyType {
         return strength;
     }
 
-    public int getHealthPoints() {
-        return healthPoints;
+    public int getHealth() {
+        return health;
     }
 
 
