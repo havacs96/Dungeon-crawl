@@ -14,7 +14,7 @@ public class Player extends Actor {
     private final String[] notWalkable = {"wall", "tree", "statue", "empty"};
     private boolean onItem;
     private int health = 1000;
-    private int strength = 10;
+    private int strength = 100;
 
 
     public Player(Cell cell) {
@@ -80,7 +80,6 @@ public class Player extends Actor {
         Actor attacker = player;
         Actor defender = enemy;
         Actor temp;
-        System.out.println(enemy.getHealth());
         while (getHealth() > 0 && enemy.getHealth() > 0) {
             attack(attacker, defender);
             temp = attacker;
@@ -89,8 +88,10 @@ public class Player extends Actor {
         }
         if (attacker instanceof Player) {
             player.setHealth(attacker.getHealth());
+            player.setStrength(attacker.getStrength()+10);
         } else {
             player.setHealth(defender.getHealth());
+            player.setStrength(defender.getStrength()+10);
         }
     }
 
@@ -98,6 +99,5 @@ public class Player extends Actor {
         int attStrength = attacker.getStrength();
         int defHealth = defender.getHealth();
         defender.setHealth(defHealth-attStrength);
-        System.out.println(defHealth);
     }
 }

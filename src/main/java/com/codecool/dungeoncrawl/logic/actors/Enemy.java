@@ -23,4 +23,23 @@ public class Enemy extends Actor {
     public String getTileName() {
         return enemyName;
     }
+
+    public String getEnemyName() {
+        return enemyName;
+    }
+
+    @Override
+    public int getStrength() {
+        return strength;
+    }
+
+    @Override
+    public int getHealth() {
+        return health;
+    }
+
+    @Override
+    public void setHealth(int health) {
+        this.health = health;
+    }
 }

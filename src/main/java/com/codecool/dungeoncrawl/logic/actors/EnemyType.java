@@ -8,7 +8,7 @@ public enum EnemyType {
 
     private final String enemyName;
     private final int strength;
-    private final int health;
+    private int health;
 
     EnemyType(String enemyName, int strength, int health) {
         this.enemyName = enemyName;

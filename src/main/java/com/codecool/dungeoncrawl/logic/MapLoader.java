@@ -80,7 +80,6 @@ public class MapLoader {
                         case 'm':
                             cell.setType(CellType.FLOOR);
                             new Enemy(cell, EnemyType.MONSTER);
-                            System.out.println(cell.getActor());
                             break;
                         case 'h':
                             cell.setType(CellType.FLOOR);
