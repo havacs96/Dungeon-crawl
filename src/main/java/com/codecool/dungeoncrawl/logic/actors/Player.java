@@ -86,6 +86,9 @@ public class Player extends Actor {
             attacker = defender;
             defender = temp;
         }
+        if (0 <= player.getHealth()){
+            System.exit(0);
+        }
         if (attacker instanceof Player) {
             player.setHealth(attacker.getHealth());
             player.setStrength(attacker.getStrength()+10);
