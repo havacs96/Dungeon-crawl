@@ -59,6 +59,8 @@ public class Main extends Application {
 
         button.setOnAction((event) -> {
             map.getPlayer().addItemToInventory();
+            button.setDisable(true);
+
         });
 
         BorderPane borderPane = new BorderPane();
@@ -77,34 +79,32 @@ public class Main extends Application {
     }
 
 
+    public void changeButtonStateOnItem(){
+        if (map.getPlayer().isOnItem()){
+            button.setDisable(false);
+        }
+    }
+
     private void onKeyPressed(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
             case UP:
                 map.getPlayer().move(0, -1);
-                if (map.getPlayer().isOnItem()) {
-                    button.setDisable(false);
-                }
+                changeButtonStateOnItem();
                 refresh();
                 break;
             case DOWN:
                 map.getPlayer().move(0, 1);
-                if (map.getPlayer().isOnItem()) {
-                    button.setDisable(false);
-                }
+                changeButtonStateOnItem();
                 refresh();
                 break;
             case LEFT:
                 map.getPlayer().move(-1, 0);
-                if (map.getPlayer().isOnItem()) {
-                    button.setDisable(false);
-                }
+                changeButtonStateOnItem();
                 refresh();
                 break;
             case RIGHT:
                 map.getPlayer().move(1,0);
-                if (map.getPlayer().isOnItem()) {
-                    button.setDisable(false);
-                }
+                changeButtonStateOnItem();
                 refresh();
                 break;
         }
@@ -128,6 +128,7 @@ public class Main extends Application {
         }
         healthLabel.setText("" + map.getPlayer().getHealth());
         List<Item> fullInventory = map.getPlayer().getInventory();
+        System.out.println(fullInventory);
         for (Item item : fullInventory) {
             inventoryLabel.setText("" + item.getTileName());
         }

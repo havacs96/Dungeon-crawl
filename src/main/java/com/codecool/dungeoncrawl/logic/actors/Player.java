@@ -12,6 +12,8 @@ public class Player extends Actor {
 
     private List<Item> inventory = new ArrayList<>();
     private final String[] notWalkable = {"wall", "tree", "statue", "empty"};
+    private boolean onItem;
+
 
     public Player(Cell cell) {
         super(cell);
@@ -25,11 +27,8 @@ public class Player extends Actor {
         return inventory;
     }
 
-    private boolean onItem;
-
     public void addItemToInventory() {
         inventory.add(this.getCell().getItem());
-        System.out.println(inventory);
     }
 
     public boolean isOnItem() {
@@ -38,6 +37,7 @@ public class Player extends Actor {
 
     @Override
     public void move(int dx, int dy) {
+        onItem = false;
         Cell nextCell = cell.getNeighbor(dx, dy);
         if (nextCell.getItem() != null) {
             onItem = true;
@@ -51,7 +51,7 @@ public class Player extends Actor {
         }
         cell.setActor(null);
         nextCell.setActor(this);
+        cell.setItem(null);
         cell = nextCell;
-        System.out.println(nextCell.getItem());
     }
 }
