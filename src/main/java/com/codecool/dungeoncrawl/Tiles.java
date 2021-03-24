@@ -35,10 +35,9 @@ public class Tiles {
         tileMap.put("floor3", new Tile(14, 3)); // ß
         tileMap.put("lava", new Tile(63, 5)); // |
         // Doors
-        tileMap.put("doorlvl1in", new Tile(36, 10)); // D
-        tileMap.put("doorlvl1out", new Tile(38, 10)); // U
-        tileMap.put("doorlvl2in", new Tile(45, 11)); // P
-        tileMap.put("doorlvl2out", new Tile(46, 10)); // O
+        tileMap.put("doorlvl1out", new Tile(36, 10)); // D
+        tileMap.put("doorlvl2in", new Tile(38, 10)); // U
+        tileMap.put("doorlvl2out", new Tile(46, 10)); // P
         tileMap.put("doorlvl3in", new Tile(46, 11)); // I
         // Others
         tileMap.put("tree", new Tile(13, 13)); // T

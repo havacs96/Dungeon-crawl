@@ -3,12 +3,8 @@ package com.codecool.dungeoncrawl;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
-import com.codecool.dungeoncrawl.logic.actors.EnemyType;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.items.Item;
-import com.codecool.dungeoncrawl.logic.items.Key;
-import com.codecool.dungeoncrawl.logic.items.KeyType;
-import com.codecool.dungeoncrawl.logic.items.PotionType;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -23,7 +19,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 
@@ -125,11 +120,18 @@ public class Main extends Application {
 
 
     private void refresh() {
-        if (currentMap.getPlayer().isOnDoor()){
+        if (currentMap.getPlayer().isOnDoorDown()){
             Player currentPlayer = currentMap.getPlayer();
             currentMapIndex++;
             currentMap = maps.get(currentMapIndex);
-            Cell currentCell = currentMap.getDoor();
+            Cell currentCell = currentMap.getDoorDown();
+            currentMap.setPlayer(currentPlayer);
+            currentMap.getPlayer().setCell(currentCell);
+        } else if (currentMap.getPlayer().isOnDoorUp()) {
+            Player currentPlayer = currentMap.getPlayer();
+            currentMapIndex--;
+            currentMap = maps.get(currentMapIndex);
+            Cell currentCell = currentMap.getDoorUp();
             currentMap.setPlayer(currentPlayer);
             currentMap.getPlayer().setCell(currentCell);
         }

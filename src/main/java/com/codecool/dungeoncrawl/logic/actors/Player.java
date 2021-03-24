@@ -15,7 +15,8 @@ public class Player extends Actor {
     private boolean onItem;
     private int health = 1000;
     private int strength = 100;
-    private boolean onDoor = false;
+    private boolean onDoorDown = false;
+    private boolean onDoorUp = false;
     /*private boolean hasBronzeKey = false;
     private boolean hasSilverKey = false;
     private boolean hasGoldKey = false;*/
@@ -58,18 +59,28 @@ public class Player extends Actor {
         this.health = health;
     }
 
-    public boolean isOnDoor() {
-        return onDoor;
+    public boolean isOnDoorDown() {
+        return onDoorDown;
+    }
+
+    public boolean isOnDoorUp() {
+        return onDoorUp;
     }
 
     @Override
     public void move(int dx, int dy) {
         onItem = false;
-        onDoor = false;
+        onDoorDown = false;
+        onDoorUp = false;
         Cell nextCell = cell.getNeighbor(dx, dy);
         System.out.println(nextCell.getTileName());
-        if (nextCell.getTileName().equals("doorlvl1in") || nextCell.getTileName().equals("doorlvl2in")){
-            onDoor = true;
+        if (nextCell.getTileName().equals("doorlvl1out") || nextCell.getTileName().equals("doorlvl2out")){
+            onDoorDown = true;
+            //TODO hasKey()
+            return;
+        }
+        if (nextCell.getTileName().equals("doorlvl2in") || nextCell.getTileName().equals("doorlvl3in")){
+            onDoorUp = true;
             //TODO hasKey()
             return;
         }
@@ -88,6 +99,8 @@ public class Player extends Actor {
     }
 
     public void fight(Actor player, Actor enemy) {
+        System.out.println(player);
+        System.out.println(enemy);
         Actor attacker = player;
         Actor defender = enemy;
         Actor temp;

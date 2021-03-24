@@ -40,11 +40,22 @@ public class GameMap {
         return height;
     }
 
-    public Cell getDoor(){
+    public Cell getDoorDown() {
         for (Cell[] cell : cells) {
-            for (Cell cell1 : cell) {
-                if (cell1.getType() == CellType.DOOR2 || cell1.getType() == CellType.DOOR4){
-                    return cell1;
+            for (Cell doorCell : cell) {
+                if (doorCell.getType() == CellType.DOOR2 || doorCell.getType() == CellType.DOOR4) {
+                    return doorCell;
+                }
+            }
+        }
+        return null;
+    }
+
+    public Cell getDoorUp() {
+        for (Cell[] cell : cells) {
+            for (Cell doorCell : cell) {
+                if (doorCell.getType() == CellType.DOOR1 || doorCell.getType() == CellType.DOOR3) {
+                    return doorCell;
                 }
             }
         }

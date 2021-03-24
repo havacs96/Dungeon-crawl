@@ -7,9 +7,9 @@ public enum CellType {
     FLOOR2("floor2"),
     FLOOR3("floor3"),
     LAVA("lava"),
-    DOOR1("doorlvl1in"),
-    DOOR2("doorlvl1out"),
-    DOOR3("doorlvl2in"),
+    DOOR1("doorlvl1out"),
+    DOOR2("doorlvl2in"),
+    DOOR3("doorlvl2out"),
     DOOR4("doorlvl3in"),
 
     // cannot collide
