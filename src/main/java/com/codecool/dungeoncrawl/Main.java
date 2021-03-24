@@ -28,11 +28,11 @@ import java.util.List;
 
 
 public class Main extends Application {
-    GameMap map = MapLoader.loadMap();
-    Canvas canvas = new Canvas(
-            map.getWidth() * Tiles.TILE_WIDTH,
-            map.getHeight() * Tiles.TILE_WIDTH);
-    GraphicsContext context = canvas.getGraphicsContext2D();
+    int currentMapIndex;
+    ArrayList<GameMap> maps = new ArrayList<>();
+    GameMap currentMap;
+    Canvas canvas;
+    GraphicsContext context;
     Label healthLabel = new Label();
     Label inventoryLabel = new Label();
     Button button = new Button("Pick Up!");
@@ -44,6 +44,12 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        addMaps();
+        currentMap = maps.get(currentMapIndex);
+        canvas = new Canvas(
+                currentMap.getWidth() * Tiles.TILE_WIDTH,
+                currentMap.getHeight() * Tiles.TILE_WIDTH);
+        context = canvas.getGraphicsContext2D();
 
         GridPane ui = new GridPane();
 
@@ -60,9 +66,9 @@ public class Main extends Application {
         button.setDisable(true);
 
         button.setOnAction((event) -> {
-            map.getPlayer().addItemToInventory();
+            currentMap.getPlayer().addItemToInventory();
             button.setDisable(true);
-            List<Item> fullInventory = map.getPlayer().getInventory();
+            List<Item> fullInventory = currentMap.getPlayer().getInventory();
             inventoryLabel.setText("");
             for (Item item : fullInventory) {
                 inventoryLabel.setText("" +inventoryLabel.getText() + "\n" + item.getTileName());
@@ -87,7 +93,7 @@ public class Main extends Application {
 
 
     public void changeButtonStateOnItem(){
-        if (map.getPlayer().isOnItem()){
+        if (currentMap.getPlayer().isOnItem()){
             button.setDisable(false);
         }
     }
@@ -95,22 +101,22 @@ public class Main extends Application {
     private void onKeyPressed(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
             case UP:
-                map.getPlayer().move(0, -1);
+                currentMap.getPlayer().move(0, -1);
                 changeButtonStateOnItem();
                 refresh();
                 break;
             case DOWN:
-                map.getPlayer().move(0, 1);
+                currentMap.getPlayer().move(0, 1);
                 changeButtonStateOnItem();
                 refresh();
                 break;
             case LEFT:
-                map.getPlayer().move(-1, 0);
+                currentMap.getPlayer().move(-1, 0);
                 changeButtonStateOnItem();
                 refresh();
                 break;
             case RIGHT:
-                map.getPlayer().move(1,0);
+                currentMap.getPlayer().move(1,0);
                 changeButtonStateOnItem();
                 refresh();
                 break;
@@ -119,11 +125,19 @@ public class Main extends Application {
 
 
     private void refresh() {
+        if (currentMap.getPlayer().isOnDoor()){
+            Player currentPlayer = currentMap.getPlayer();
+            currentMapIndex++;
+            currentMap = maps.get(currentMapIndex);
+            Cell currentCell = currentMap.getDoor();
+            currentMap.setPlayer(currentPlayer);
+            currentMap.getPlayer().setCell(currentCell);
+        }
         context.setFill(Color.BLACK);
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        for (int x = 0; x < map.getWidth(); x++) {
-            for (int y = 0; y < map.getHeight(); y++) {
-                Cell cell = map.getCell(x, y);
+        for (int x = 0; x < currentMap.getWidth(); x++) {
+            for (int y = 0; y < currentMap.getHeight(); y++) {
+                Cell cell = currentMap.getCell(x, y);
                 if (cell.getActor() != null) {
                     Tiles.drawTile(context, cell.getActor(), x, y);
                 }else if (cell.getItem() != null) {
@@ -133,8 +147,15 @@ public class Main extends Application {
                 }
             }
         }
-        healthLabel.setText("" + map.getPlayer().getHealth());
+        healthLabel.setText("" + currentMap.getPlayer().getHealth());
 
+    }
+
+    private void addMaps(){
+        String[] mapFiles = {"/map.txt", "/map2.txt", "/map3.txt"};
+        for (String mapFile : mapFiles) {
+            maps.add(MapLoader.loadMap(mapFile));
+        }
     }
 
 }

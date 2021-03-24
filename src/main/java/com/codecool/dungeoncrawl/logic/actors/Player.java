@@ -15,6 +15,10 @@ public class Player extends Actor {
     private boolean onItem;
     private int health = 1000;
     private int strength = 100;
+    private boolean onDoor = false;
+    /*private boolean hasBronzeKey = false;
+    private boolean hasSilverKey = false;
+    private boolean hasGoldKey = false;*/
 
 
     public Player(Cell cell) {
@@ -54,18 +58,25 @@ public class Player extends Actor {
         this.health = health;
     }
 
+    public boolean isOnDoor() {
+        return onDoor;
+    }
+
     @Override
     public void move(int dx, int dy) {
         onItem = false;
+        onDoor = false;
         Cell nextCell = cell.getNeighbor(dx, dy);
+        System.out.println(nextCell.getTileName());
+        if (nextCell.getTileName().equals("doorlvl1in") || nextCell.getTileName().equals("doorlvl2in")){
+            onDoor = true;
+            //TODO hasKey()
+            return;
+        }
         if (nextCell.getItem() != null) {
             onItem = true;
         }
         else if (Arrays.asList(notWalkable).contains(nextCell.getTileName())) {
-            return;
-        }
-        else if (nextCell.getTileName().equals("lvl1doorin")){
-            //TODO hasKey();
             return;
         } else if (nextCell.getActor() != null) {
             fight(cell.getActor(), nextCell.getActor());
@@ -86,7 +97,7 @@ public class Player extends Actor {
             attacker = defender;
             defender = temp;
         }
-        if (0 <= player.getHealth()){
+        if (0 >= player.getHealth()){
             System.exit(0);
         }
         if (attacker instanceof Player) {

@@ -40,4 +40,15 @@ public class GameMap {
         return height;
     }
 
+    public Cell getDoor(){
+        for (Cell[] cell : cells) {
+            for (Cell cell1 : cell) {
+                if (cell1.getType() == CellType.DOOR2 || cell1.getType() == CellType.DOOR4){
+                    return cell1;
+                }
+            }
+        }
+        return null;
+    }
+
 }
