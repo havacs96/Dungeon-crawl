@@ -77,7 +77,7 @@ public class MapLoader {
                             break;
                         // Enemies
                         case 's':
-                            cell.setType(CellType.FLOOR);
+                            cell.setType(CellType.FLOOR2);
                             new Enemy(cell, EnemyType.SKELETON);
                             break;
                         case 'm':
@@ -85,7 +85,7 @@ public class MapLoader {
                             new Enemy(cell, EnemyType.MONSTER);
                             break;
                         case 'h':
-                            cell.setType(CellType.FLOOR);
+                            cell.setType(CellType.FLOOR3);
                             new Enemy(cell, EnemyType.HELLBOY);
                             break;
                         // Player

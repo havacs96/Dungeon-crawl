@@ -1,9 +1,7 @@
 package com.codecool.dungeoncrawl.logic.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
-import com.codecool.dungeoncrawl.logic.items.Item;
-import com.codecool.dungeoncrawl.logic.items.Key;
-import com.codecool.dungeoncrawl.logic.items.KeyType;
+import com.codecool.dungeoncrawl.logic.items.*;
 
 
 import java.util.ArrayList;
@@ -13,7 +11,8 @@ import java.util.List;
 public class Player extends Actor {
 
     private List<Item> inventory = new ArrayList<>();
-    private final String[] notWalkable = {"wall", "wall2", "wall3", "tree", "statue", "statue2", "empty", "grave", };
+    private final String[] notWalkable = {"wall", "wall2", "wall3", "tree", "statue", "statue2",
+            "empty", "grave", "altar" };
     private boolean onItem;
     private int health = 1000;
     private int strength = 100;
@@ -23,6 +22,44 @@ public class Player extends Actor {
 
     public Player(Cell cell) {
         super(cell);
+    }
+
+    public void usePotion(String potiontype) {
+        List<String> potionNames = new ArrayList<>();
+        for (Item item : inventory) {
+            if (item instanceof Potion) {
+                potionNames.add(item.getTileName());
+            }
+        }
+        switch (potiontype){
+            case "w":
+                if (potionNames.contains("weak")){
+                    this.setHealth(this.getHealth() + PotionType.WEAK_HEALTH_POTION.getHealthPlus());
+                    inventory.remove(findPotion(PotionType.WEAK_HEALTH_POTION));
+                }
+                break;
+            case "e":
+                if (potionNames.contains("extra")){
+                    this.setHealth(this.getHealth() + PotionType.STRONG_HEALTH_POTION.getHealthPlus());
+                    inventory.remove(findPotion(PotionType.STRONG_HEALTH_POTION));
+                }
+                break;
+            case "s":
+                if (potionNames.contains("strong")){
+                    this.setHealth(this.getHealth() + PotionType.EXTRA_HEALTH_POTION.getHealthPlus());
+                    inventory.remove(findPotion(PotionType.EXTRA_HEALTH_POTION));
+                }
+                break;
+        }
+    }
+
+    public Potion findPotion(PotionType type) {
+        for (Item item : inventory) {
+            if(item.getTileName().equals("weak")){
+                return (Potion) item;
+            }
+        }
+        return null;
     }
 
     public String getTileName() {
@@ -134,7 +171,6 @@ public class Player extends Actor {
                 keyNames.add(item.getTileName());
             }
         }
-        System.out.println(keyNames);
         if(door.equals("doorlvl1out") && keyNames.contains("bronze")){return true;}
         else if(door.equals("doorlvl2out") && keyNames.contains("silver")){return true;}
         return false;

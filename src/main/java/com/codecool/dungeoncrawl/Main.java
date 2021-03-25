@@ -142,6 +142,18 @@ public class Main extends Application {
                 changeButtonStateOnItem();
                 refresh();
                 break;
+            case W:
+                currentMap.getPlayer().usePotion("w");
+                refresh();
+                break;
+            case S:
+                currentMap.getPlayer().usePotion("s");
+                refresh();
+                break;
+            case E:
+                currentMap.getPlayer().usePotion("e");
+                refresh();
+                break;
         }
     }
 
@@ -181,6 +193,11 @@ public class Main extends Application {
             }
         }
         healthLabel.setText("" + currentMap.getPlayer().getHealth());
+        List<Item> fullInventory = currentMap.getPlayer().getInventory();
+        inventoryLabel.setText("");
+        for (Item item : fullInventory) {
+            inventoryLabel.setText("" +inventoryLabel.getText() + "\n" + item.getTileName());
+        }
 
     }
 

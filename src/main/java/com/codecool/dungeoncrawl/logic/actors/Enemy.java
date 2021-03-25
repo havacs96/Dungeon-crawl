@@ -13,7 +13,7 @@ public class Enemy extends Actor {
     private EnemyType type;
     private final int directionOptions = 4;
     private final String[] notWalkable = {"wall", "wall2", "wall3", "tree", "statue",
-            "statue2", "empty", "grave", "doorlvl1out", "doorlvl2out", "doorlvl2in", "doorlvl3in"};
+            "statue2", "empty", "grave", "doorlvl1out", "doorlvl2out", "doorlvl2in", "doorlvl3in", "altar"};
 
     public Enemy(Cell cell, EnemyType type) {
 
