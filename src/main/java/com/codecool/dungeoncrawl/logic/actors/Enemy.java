@@ -67,21 +67,24 @@ public class Enemy extends Actor {
     public void monsterMove() {
         RandomHelper random = new RandomHelper();
         int direction = random.getRandomValue(directionOptions);
-        System.out.println(direction);
         Cell nextCell;
         switch (direction) {
             case 0: //up
                 nextCell = cell.getNeighbor(0, -1);
                 changeEnemyPosition(nextCell);
+                break;
             case 1: //down
                 nextCell = cell.getNeighbor(0, 1);
                 changeEnemyPosition(nextCell);
+                break;
             case 2: //left
                 nextCell = cell.getNeighbor(-1, 0);
                 changeEnemyPosition(nextCell);
+                break;
             case 3: //right
                 nextCell = cell.getNeighbor(1, 0);
                 changeEnemyPosition(nextCell);
+                break;
         }
     }
 }

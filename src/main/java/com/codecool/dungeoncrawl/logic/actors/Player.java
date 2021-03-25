@@ -2,6 +2,8 @@ package com.codecool.dungeoncrawl.logic.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.items.Item;
+import com.codecool.dungeoncrawl.logic.items.Key;
+import com.codecool.dungeoncrawl.logic.items.KeyType;
 
 
 import java.util.ArrayList;
@@ -17,9 +19,6 @@ public class Player extends Actor {
     private int strength = 100;
     private boolean onDoorDown = false;
     private boolean onDoorUp = false;
-    /*private boolean hasBronzeKey = false;
-    private boolean hasSilverKey = false;
-    private boolean hasGoldKey = false;*/
 
 
     public Player(Cell cell) {
@@ -73,17 +72,15 @@ public class Player extends Actor {
         onDoorDown = false;
         onDoorUp = false;
         Cell nextCell = cell.getNeighbor(dx, dy);
-        System.out.println(nextCell.getTileName());
         if (nextCell.getTileName().equals("doorlvl1out") || nextCell.getTileName().equals("doorlvl2out")){
+            if(!hasKey(nextCell.getTileName())) {return;}
             onDoorDown = true;
             cell.setActor(null);
-            //TODO hasKey()
             return;
         }
         if (nextCell.getTileName().equals("doorlvl2in") || nextCell.getTileName().equals("doorlvl3in")){
             onDoorUp = true;
             cell.setActor(null);
-            //TODO hasKey()
             return;
         }
         if (nextCell.getItem() != null) {
@@ -128,5 +125,18 @@ public class Player extends Actor {
         int attStrength = attacker.getStrength();
         int defHealth = defender.getHealth();
         defender.setHealth(defHealth-attStrength);
+    }
+
+    public boolean hasKey(String door){
+        List<String> keyNames = new ArrayList<>();
+        for (Item item : inventory) {
+            if (item instanceof Key){
+                keyNames.add(item.getTileName());
+            }
+        }
+        System.out.println(keyNames);
+        if(door.equals("doorlvl1out") && keyNames.contains("bronze")){return true;}
+        else if(door.equals("doorlvl2out") && keyNames.contains("silver")){return true;}
+        return false;
     }
 }

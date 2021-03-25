@@ -3,8 +3,7 @@ package com.codecool.dungeoncrawl.logic.items;
 public enum KeyType {
 
     BRONZE_KEY("bronze"),
-    SILVER_KEY("silver"),
-    GOLD_KEY("gold");
+    SILVER_KEY("silver");
 
     private final String keyName;
 
