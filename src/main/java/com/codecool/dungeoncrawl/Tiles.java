@@ -44,6 +44,7 @@ public class Tiles {
         tileMap.put("statue", new Tile(27, 13)); // 1
         tileMap.put("altar", new Tile(45, 0)); // 2
         tileMap.put("statue2", new Tile(40, 12)); // 3
+        tileMap.put("grave", new Tile(57, 0)); // 4
         // Player
         tileMap.put("player", new Tile(19, 68)); // @
         // Enemies

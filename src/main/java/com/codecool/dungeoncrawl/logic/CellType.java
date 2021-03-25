@@ -21,6 +21,7 @@ public enum CellType {
     STATUE("statue"),
     STATUE2("statue2"),
     ALTAR("altar"),
+    GRAVE("grave"),
 
     // potions
 

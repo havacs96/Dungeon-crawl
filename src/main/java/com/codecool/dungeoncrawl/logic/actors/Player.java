@@ -11,7 +11,7 @@ import java.util.List;
 public class Player extends Actor {
 
     private List<Item> inventory = new ArrayList<>();
-    private final String[] notWalkable = {"wall", "tree", "statue", "empty"};
+    private final String[] notWalkable = {"wall", "wall2", "wall3", "tree", "statue", "statue2", "empty", "grave", };
     private boolean onItem;
     private int health = 1000;
     private int strength = 100;

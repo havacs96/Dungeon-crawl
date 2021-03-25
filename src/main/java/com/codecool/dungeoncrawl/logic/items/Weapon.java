@@ -6,9 +6,9 @@ public class Weapon extends Item {
 
     public final String weaponName;
 
-    public Weapon(Cell cell, String weaponName) {
+    public Weapon(Cell cell, WeaponType weaponName) {
         super(cell);
-        this.weaponName = weaponName;
+        this.weaponName = weaponName.getWeaponName();
     }
 
     @Override

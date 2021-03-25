@@ -72,6 +72,9 @@ public class MapLoader {
                         case '2':
                             cell.setType(CellType.ALTAR);
                             break;
+                        case '4':
+                            cell.setType(CellType.GRAVE);
+                            break;
                         // Enemies
                         case 's':
                             cell.setType(CellType.FLOOR);
@@ -98,6 +101,14 @@ public class MapLoader {
                         case 'b':
                             cell.setType(CellType.FLOOR);
                             new Potion(cell, PotionType.STRONG_HEALTH_POTION);
+                            break;
+                        case '6':
+                            cell.setType(CellType.FLOOR);
+                            new Potion(cell, PotionType.WEAK_HEALTH_POTION);
+                            break;
+                        case '9':
+                            cell.setType(CellType.FLOOR);
+                            new Weapon(cell, WeaponType.CROSSBOW);
                             break;
                         default:
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");

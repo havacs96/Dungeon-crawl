@@ -16,4 +16,8 @@ public enum WeaponType {
         this.plusHealthPoints = plusHealthPoints;
         this.plusStrength = plusStrength;
     }
+
+    public String getWeaponName() {
+        return weaponName;
+    }
 }
