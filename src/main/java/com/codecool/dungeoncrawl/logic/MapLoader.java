@@ -88,6 +88,18 @@ public class MapLoader {
                             cell.setType(CellType.FLOOR3);
                             new Enemy(cell, EnemyType.HELLBOY);
                             break;
+                        case 'x':
+                            cell.setType(CellType.FLOOR);
+                            new Enemy(cell, EnemyType.WIZZARD);
+                            break;
+                        case 'y':
+                            cell.setType(CellType.FLOOR2);
+                            new Enemy(cell, EnemyType.KNIGHT);
+                            break;
+                        case 'z':
+                            cell.setType(CellType.FLOOR3);
+                            new Enemy(cell, EnemyType.MOLTEN);
+                            break;
                         // Player
                         case '@':
                             cell.setType(CellType.FLOOR);

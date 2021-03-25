@@ -64,7 +64,10 @@ public class Tiles {
         tileMap.put("weak", new Tile(23, 42)); // p
         tileMap.put("strong", new Tile(23, 43)); // m
         tileMap.put("extra", new Tile(23, 44));  // b
-        // TODO bosses
+        // bosses
+        tileMap.put("wizzard", new Tile(17, 59)); // x
+        tileMap.put("knight", new Tile(26, 59)); // y
+        tileMap.put("molten", new Tile(49, 59)); // z
     }
 
     public static void drawTile(GraphicsContext context, Drawable d, int x, int y) {

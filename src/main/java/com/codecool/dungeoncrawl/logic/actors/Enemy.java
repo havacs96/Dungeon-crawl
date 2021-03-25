@@ -56,7 +56,7 @@ public class Enemy extends Actor {
     }
 
     public void changeEnemyPosition(Cell nextCell){
-        if (checkEnemyMove(nextCell)){
+        if (checkEnemyMove(nextCell) && !enemyName.equals("wizzard") && !enemyName.equals("knight") && !enemyName.equals("molten")){
             cell.setActor(null);
             nextCell.setActor(this);
             cell = nextCell;
