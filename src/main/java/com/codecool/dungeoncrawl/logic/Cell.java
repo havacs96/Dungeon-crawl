@@ -31,6 +31,13 @@ public class Cell implements Drawable {
         this.actor = actor;
     }
 
+    public Enemy getEnemy() {
+        if (this.actor instanceof Enemy) {
+            return (Enemy) (actor);
+        }
+        return null;
+    }
+
     public Actor getActor() {
         return actor;
     }

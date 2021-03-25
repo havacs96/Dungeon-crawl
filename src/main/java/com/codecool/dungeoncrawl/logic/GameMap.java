@@ -1,6 +1,11 @@
 package com.codecool.dungeoncrawl.logic;
 
+import com.codecool.dungeoncrawl.logic.actors.Enemy;
+import com.codecool.dungeoncrawl.logic.actors.EnemyType;
 import com.codecool.dungeoncrawl.logic.actors.Player;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameMap {
     private int width;
@@ -60,6 +65,18 @@ public class GameMap {
             }
         }
         return null;
+    }
+
+    public List<Enemy> getEnemiesOnCurrentMap(){
+        List<Enemy> enemies = new ArrayList<>();
+        for (Cell[] cell : cells) {
+            for (Cell enemyCell : cell) {
+                if (enemyCell.getActor() instanceof Enemy){
+                    enemies.add(enemyCell.getEnemy());
+                }
+            }
+        }
+        return enemies;
     }
 
 }
