@@ -10,11 +10,11 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -31,6 +31,7 @@ public class Main extends Application {
     Label healthLabel = new Label();
     Label inventoryLabel = new Label();
     Button button = new Button("Pick Up!");
+    MenuBar menuBar = new MenuBar();
 
     public static void main(String[] args) {
         launch(args);
@@ -46,8 +47,25 @@ public class Main extends Application {
                 currentMap.getHeight() * Tiles.TILE_WIDTH);
         context = canvas.getGraphicsContext2D();
 
-        GridPane ui = new GridPane();
 
+        Menu file = new Menu("File");
+        Menu authors = new Menu("Authors");
+        Menu help = new Menu("Help");
+        MenuBar menuBar = new MenuBar();
+        menuBar.getMenus().addAll(file, authors, help);
+
+        MenuItem fileRestart = new MenuItem("Restart");
+        MenuItem fileSave = new MenuItem("Save");
+        MenuItem fileLoad = new MenuItem("Load");
+        MenuItem fileExit = new MenuItem("Exit");
+
+        file.getItems().addAll(fileRestart, fileSave, fileLoad, fileExit);
+
+        VBox root = new VBox(menuBar);
+
+
+        // ui
+        GridPane ui = new GridPane();
 
         ui.setPrefWidth(200);
         ui.setPadding(new Insets(10));
@@ -75,6 +93,7 @@ public class Main extends Application {
 
         borderPane.setCenter(canvas);
         borderPane.setRight(ui);
+        borderPane.setTop(root);
 
         Scene scene = new Scene(borderPane);
 
