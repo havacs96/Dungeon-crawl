@@ -98,6 +98,10 @@ public class MapLoader {
                             cell.setType(CellType.FLOOR);
                             new Key(cell, KeyType.BRONZE_KEY);
                             break;
+                        case 'i':
+                            cell.setType(CellType.FLOOR2);
+                            new Key(cell, KeyType.SILVER_KEY);
+                            break;
                         case 'b':
                             cell.setType(CellType.FLOOR);
                             new Potion(cell, PotionType.STRONG_HEALTH_POTION);
