@@ -20,4 +20,12 @@ public enum WeaponType {
     public String getWeaponName() {
         return weaponName;
     }
+
+    public int getPlusHealthPoints() {
+        return plusHealthPoints;
+    }
+
+    public int getPlusStrength() {
+        return plusStrength;
+    }
 }

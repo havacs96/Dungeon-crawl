@@ -86,7 +86,6 @@ public class Main extends Application {
         ui.add(button, 0, 2);
 
         button.setDisable(true);
-        //button.setDefaultButton(false);
         button.setFocusTraversable(false);
         button.setOnAction((event) -> {
 

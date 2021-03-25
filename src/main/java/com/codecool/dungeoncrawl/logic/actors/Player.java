@@ -72,6 +72,21 @@ public class Player extends Actor {
 
     public void addItemToInventory() {
         inventory.add(this.getCell().getItem());
+        if(this.getCell().getItem() instanceof Weapon){addStatsToPlayer();}
+    }
+
+    public void addStatsToPlayer(){
+        Weapon weapon = (Weapon) this.getCell().getItem();
+        if(weapon.getTileName().equals("crossbow")) {
+            this.setHealth(this.getHealth() + WeaponType.CROSSBOW.getPlusHealthPoints());
+            this.setStrength(this.getStrength() + WeaponType.CROSSBOW.getPlusStrength());
+        } else if (weapon.getTileName().equals("axe")) {
+            this.setHealth(this.getHealth() + WeaponType.AXE.getPlusHealthPoints());
+            this.setStrength(this.getStrength() + WeaponType.AXE.getPlusStrength());
+        } else if (weapon.getTileName().equals("sword")) {
+            this.setHealth(this.getHealth() + WeaponType.SWORD.getPlusHealthPoints());
+            this.setStrength(this.getStrength() + WeaponType.SWORD.getPlusStrength());
+        }
     }
 
     public void removeItem() {
@@ -113,7 +128,6 @@ public class Player extends Actor {
         onDoorDown = false;
         onDoorUp = false;
         Cell nextCell = cell.getNeighbor(dx, dy);
-        System.out.println(nextCell.getTileName());
         if (nextCell.getTileName().equals("doorlvl1out") || nextCell.getTileName().equals("doorlvl2out")){
             if(!hasKey(nextCell.getTileName())) {return;}
             onDoorDown = true;
@@ -133,15 +147,13 @@ public class Player extends Actor {
         } else if (nextCell.getActor() != null) {
             fight(cell.getActor(), nextCell.getActor());
         }
+        if (nextCell.getTileName().equals("lava")){this.setHealth(this.getHealth() - 25);}
         cell.setActor(null);
         nextCell.setActor(this);
-        //cell.setItem(null);
         cell = nextCell;
     }
 
     public void fight(Actor player, Actor enemy) {
-        System.out.println(player);
-        System.out.println(enemy);
         Actor attacker = player;
         Actor defender = enemy;
         Actor temp;

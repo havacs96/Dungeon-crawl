@@ -132,6 +132,14 @@ public class MapLoader {
                             cell.setType(CellType.FLOOR);
                             new Weapon(cell, WeaponType.CROSSBOW);
                             break;
+                        case 'X':
+                            cell.setType(CellType.LAVA);
+                            new Weapon(cell, WeaponType.AXE);
+                            break;
+                        case 'Y':
+                            cell.setType(CellType.FLOOR2);
+                            new Weapon(cell, WeaponType.SWORD);
+                            break;
                         default:
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");
                     }
