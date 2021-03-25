@@ -24,38 +24,38 @@ public class Player extends Actor {
         super(cell);
     }
 
-    public void usePotion(String potiontype) {
+    public void usePotion(String potionType) {
         List<String> potionNames = new ArrayList<>();
         for (Item item : inventory) {
             if (item instanceof Potion) {
                 potionNames.add(item.getTileName());
             }
         }
-        switch (potiontype){
+        switch (potionType){
             case "w":
                 if (potionNames.contains("weak")){
                     this.setHealth(this.getHealth() + PotionType.WEAK_HEALTH_POTION.getHealthPlus());
-                    inventory.remove(findPotion(PotionType.WEAK_HEALTH_POTION));
-                }
-                break;
-            case "e":
-                if (potionNames.contains("extra")){
-                    this.setHealth(this.getHealth() + PotionType.STRONG_HEALTH_POTION.getHealthPlus());
-                    inventory.remove(findPotion(PotionType.STRONG_HEALTH_POTION));
+                    inventory.remove(findPotion(PotionType.WEAK_HEALTH_POTION, "weak"));
                 }
                 break;
             case "s":
                 if (potionNames.contains("strong")){
+                    this.setHealth(this.getHealth() + PotionType.STRONG_HEALTH_POTION.getHealthPlus());
+                    inventory.remove(findPotion(PotionType.STRONG_HEALTH_POTION, "strong"));
+                }
+                break;
+            case "e":
+                if (potionNames.contains("extra")){
                     this.setHealth(this.getHealth() + PotionType.EXTRA_HEALTH_POTION.getHealthPlus());
-                    inventory.remove(findPotion(PotionType.EXTRA_HEALTH_POTION));
+                    inventory.remove(findPotion(PotionType.EXTRA_HEALTH_POTION, "extra"));
                 }
                 break;
         }
     }
 
-    public Potion findPotion(PotionType type) {
+    public Potion findPotion(PotionType type, String efficiency) {
         for (Item item : inventory) {
-            if(item.getTileName().equals("weak")){
+            if(item.getTileName().equals(efficiency)) {
                 return (Potion) item;
             }
         }

@@ -114,14 +114,20 @@ public class MapLoader {
                             cell.setType(CellType.FLOOR2);
                             new Key(cell, KeyType.SILVER_KEY);
                             break;
+                        //potions
                         case 'b':
-                            cell.setType(CellType.FLOOR);
+                            cell.setType(CellType.FLOOR2);
                             new Potion(cell, PotionType.STRONG_HEALTH_POTION);
                             break;
                         case '6':
                             cell.setType(CellType.FLOOR);
                             new Potion(cell, PotionType.WEAK_HEALTH_POTION);
                             break;
+                        case 'q':
+                            cell.setType(CellType.FLOOR3);
+                            new Potion(cell, PotionType.EXTRA_HEALTH_POTION);
+                            break;
+                        //weapons
                         case '9':
                             cell.setType(CellType.FLOOR);
                             new Weapon(cell, WeaponType.CROSSBOW);
