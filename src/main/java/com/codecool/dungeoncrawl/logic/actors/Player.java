@@ -33,21 +33,21 @@ public class Player extends Actor {
         }
         switch (potionType){
             case "w":
-                if (potionNames.contains("weak")){
+                if (potionNames.contains("weak healing potion")){
                     this.setHealth(this.getHealth() + PotionType.WEAK_HEALTH_POTION.getHealthPlus());
-                    inventory.remove(findPotion(PotionType.WEAK_HEALTH_POTION, "weak"));
+                    inventory.remove(findPotion(PotionType.WEAK_HEALTH_POTION, "weak healing potion"));
                 }
                 break;
             case "s":
-                if (potionNames.contains("strong")){
+                if (potionNames.contains("strong healing potion")){
                     this.setHealth(this.getHealth() + PotionType.STRONG_HEALTH_POTION.getHealthPlus());
-                    inventory.remove(findPotion(PotionType.STRONG_HEALTH_POTION, "strong"));
+                    inventory.remove(findPotion(PotionType.STRONG_HEALTH_POTION, "strong healing potion"));
                 }
                 break;
             case "e":
-                if (potionNames.contains("extra")){
+                if (potionNames.contains("extra healing potion")){
                     this.setHealth(this.getHealth() + PotionType.EXTRA_HEALTH_POTION.getHealthPlus());
-                    inventory.remove(findPotion(PotionType.EXTRA_HEALTH_POTION, "extra"));
+                    inventory.remove(findPotion(PotionType.EXTRA_HEALTH_POTION, "extra healing potion"));
                 }
                 break;
         }
@@ -72,6 +72,10 @@ public class Player extends Actor {
 
     public void addItemToInventory() {
         inventory.add(this.getCell().getItem());
+    }
+
+    public void removeItem() {
+        this.getCell().setItem(null);
     }
 
     public boolean isOnItem() {
@@ -109,6 +113,7 @@ public class Player extends Actor {
         onDoorDown = false;
         onDoorUp = false;
         Cell nextCell = cell.getNeighbor(dx, dy);
+        System.out.println(nextCell.getTileName());
         if (nextCell.getTileName().equals("doorlvl1out") || nextCell.getTileName().equals("doorlvl2out")){
             if(!hasKey(nextCell.getTileName())) {return;}
             onDoorDown = true;
@@ -130,7 +135,7 @@ public class Player extends Actor {
         }
         cell.setActor(null);
         nextCell.setActor(this);
-        cell.setItem(null);
+        //cell.setItem(null);
         cell = nextCell;
     }
 

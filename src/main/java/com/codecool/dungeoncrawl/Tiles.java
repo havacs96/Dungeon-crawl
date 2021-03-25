@@ -61,9 +61,9 @@ public class Tiles {
         tileMap.put("sword", new Tile(15, 48)); // s
         tileMap.put("axe", new Tile(29, 48)); // a
         // Potions
-        tileMap.put("weak", new Tile(23, 42)); // p
-        tileMap.put("strong", new Tile(23, 43)); // m
-        tileMap.put("extra", new Tile(23, 44));  // b
+        tileMap.put("weak healing potion", new Tile(23, 42)); // p
+        tileMap.put("strong healing potion", new Tile(23, 43)); // m
+        tileMap.put("extra healing potion", new Tile(23, 44));  // b
         // bosses
         tileMap.put("wizzard", new Tile(17, 59)); // x
         tileMap.put("knight", new Tile(26, 59)); // y

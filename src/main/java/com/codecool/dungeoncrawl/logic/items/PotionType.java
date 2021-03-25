@@ -2,9 +2,9 @@ package com.codecool.dungeoncrawl.logic.items;
 
 public enum PotionType {
 
-    STRONG_HEALTH_POTION("strong", 40),
-    WEAK_HEALTH_POTION("weak", 20),
-    EXTRA_HEALTH_POTION("extra", 100);
+    STRONG_HEALTH_POTION("strong healing potion", 40),
+    WEAK_HEALTH_POTION("weak healing potion", 20),
+    EXTRA_HEALTH_POTION("extra healing potion", 100);
 
     private final String potionName;
     private final int healthPlus;

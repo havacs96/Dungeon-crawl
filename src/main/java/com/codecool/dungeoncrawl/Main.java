@@ -34,6 +34,7 @@ public class Main extends Application {
     Label inventoryLabel = new Label();
     Button button = new Button("Pick Up!");
 
+
     List<Enemy> enemies;
 
     MenuBar menuBar = new MenuBar();
@@ -85,10 +86,13 @@ public class Main extends Application {
         ui.add(button, 0, 2);
 
         button.setDisable(true);
-
+        //button.setDefaultButton(false);
+        button.setFocusTraversable(false);
         button.setOnAction((event) -> {
+
             currentMap.getPlayer().addItemToInventory();
             button.setDisable(true);
+            currentMap.getPlayer().removeItem();
             List<Item> fullInventory = currentMap.getPlayer().getInventory();
             inventoryLabel.setText("");
             for (Item item : fullInventory) {
@@ -115,9 +119,11 @@ public class Main extends Application {
 
 
     public void changeButtonStateOnItem(){
-        if (currentMap.getPlayer().isOnItem()){
+        if (currentMap.getPlayer().isOnItem()) {
             button.setDisable(false);
-        }
+        } else {
+            button.setDisable(true);
+            }
     }
 
     private void onKeyPressed(KeyEvent keyEvent) {
