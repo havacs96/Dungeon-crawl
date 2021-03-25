@@ -6,6 +6,7 @@ import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.items.Item;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -57,9 +58,11 @@ public class Main extends Application {
         MenuItem fileRestart = new MenuItem("Restart");
         MenuItem fileSave = new MenuItem("Save");
         MenuItem fileLoad = new MenuItem("Load");
+        MenuItem fileSeparator = new SeparatorMenuItem();
         MenuItem fileExit = new MenuItem("Exit");
+        fileExit.setOnAction(e -> Platform.exit());
 
-        file.getItems().addAll(fileRestart, fileSave, fileLoad, fileExit);
+        file.getItems().addAll(fileRestart, fileSave, fileLoad, fileSeparator, fileExit);
 
         VBox root = new VBox(menuBar);
 
