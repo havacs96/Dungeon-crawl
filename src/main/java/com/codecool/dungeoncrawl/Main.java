@@ -3,6 +3,7 @@ package com.codecool.dungeoncrawl;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
+import com.codecool.dungeoncrawl.logic.actors.Enemy;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.items.Item;
 import javafx.application.Application;
@@ -32,7 +33,11 @@ public class Main extends Application {
     Label healthLabel = new Label();
     Label inventoryLabel = new Label();
     Button button = new Button("Pick Up!");
+
+    List<Enemy> enemies;
+
     MenuBar menuBar = new MenuBar();
+
 
     public static void main(String[] args) {
         launch(args);
@@ -142,6 +147,7 @@ public class Main extends Application {
 
 
     private void refresh() {
+        enemies = currentMap.getEnemiesOnCurrentMap();
         if (currentMap.getPlayer().isOnDoorDown()){
             Player currentPlayer = currentMap.getPlayer();
             currentMapIndex++;
@@ -156,6 +162,9 @@ public class Main extends Application {
             Cell currentCell = currentMap.getDoorUp();
             currentMap.setPlayer(currentPlayer);
             currentMap.getPlayer().setCell(currentCell);
+        }
+        for (Enemy enemy : enemies) {
+            enemy.monsterMove();
         }
         context.setFill(Color.BLACK);
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());

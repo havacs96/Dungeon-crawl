@@ -1,6 +1,9 @@
 package com.codecool.dungeoncrawl.logic.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.RandomHelper;
+
+import java.util.Arrays;
 
 public class Enemy extends Actor {
 
@@ -8,6 +11,9 @@ public class Enemy extends Actor {
     private final int strength;
     private int health;
     private EnemyType type;
+    private final int directionOptions = 4;
+    private final String[] notWalkable = {"wall", "wall2", "wall3", "tree", "statue",
+            "statue2", "empty", "grave", "doorlvl1out", "doorlvl2out", "doorlvl2in", "doorlvl3in"};
 
     public Enemy(Cell cell, EnemyType type) {
 
@@ -41,5 +47,41 @@ public class Enemy extends Actor {
     @Override
     public void setHealth(int health) {
         this.health = health;
+    }
+
+    public boolean checkEnemyMove(Cell cell){
+        if (!(Arrays.asList(notWalkable).contains(cell.getTileName()))
+                && cell.getActor() == null && cell.getItem() == null){ return true;}
+        return false;
+    }
+
+    public void changeEnemyPosition(Cell nextCell){
+        if (checkEnemyMove(nextCell)){
+            cell.setActor(null);
+            nextCell.setActor(this);
+            cell = nextCell;
+        }
+    }
+
+
+    public void monsterMove() {
+        RandomHelper random = new RandomHelper();
+        int direction = random.getRandomValue(directionOptions);
+        System.out.println(direction);
+        Cell nextCell;
+        switch (direction) {
+            case 0: //up
+                nextCell = cell.getNeighbor(0, -1);
+                changeEnemyPosition(nextCell);
+            case 1: //down
+                nextCell = cell.getNeighbor(0, 1);
+                changeEnemyPosition(nextCell);
+            case 2: //left
+                nextCell = cell.getNeighbor(-1, 0);
+                changeEnemyPosition(nextCell);
+            case 3: //right
+                nextCell = cell.getNeighbor(1, 0);
+                changeEnemyPosition(nextCell);
+        }
     }
 }

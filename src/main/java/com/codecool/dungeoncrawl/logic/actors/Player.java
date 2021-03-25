@@ -76,11 +76,13 @@ public class Player extends Actor {
         System.out.println(nextCell.getTileName());
         if (nextCell.getTileName().equals("doorlvl1out") || nextCell.getTileName().equals("doorlvl2out")){
             onDoorDown = true;
+            cell.setActor(null);
             //TODO hasKey()
             return;
         }
         if (nextCell.getTileName().equals("doorlvl2in") || nextCell.getTileName().equals("doorlvl3in")){
             onDoorUp = true;
+            cell.setActor(null);
             //TODO hasKey()
             return;
         }
