@@ -157,7 +157,7 @@ public class Player extends Actor {
         Actor attacker = player;
         Actor defender = enemy;
         Actor temp;
-        while (getHealth() > 0 && enemy.getHealth() > 0) {
+        while (this.getHealth() > 0 && enemy.getHealth() > 0) {
             attack(attacker, defender);
             temp = attacker;
             attacker = defender;
