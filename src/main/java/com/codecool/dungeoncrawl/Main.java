@@ -16,6 +16,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -31,6 +32,7 @@ public class Main extends Application {
     Canvas canvas;
     GraphicsContext context;
     Label healthLabel = new Label();
+    Label strengthLabel = new Label();
     Label inventoryLabel = new Label();
     Button button = new Button("Pick Up!");
 
@@ -79,11 +81,20 @@ public class Main extends Application {
         ui.setPrefWidth(200);
         ui.setPadding(new Insets(10));
 
+        final Pane spring = new Pane();
         ui.add(new Label("Health: "), 0, 0);
         ui.add(healthLabel, 1, 0);
-        ui.add(new Label("Inventory: "), 0, 3);
-        ui.add(inventoryLabel, 0, 4);
-        ui.add(button, 0, 2);
+        ui.add(new Label("Strength: "), 0, 1);
+        ui.add(strengthLabel, 1, 1);
+        ui.add(new Label("Use weak health \n potion with key: w \n\n"), 0, 2);
+        ui.add(new Label("Use strong health \n potion with key: s \n"), 0, 3);
+        ui.add(new Label("Use extra health \n potion with key: e \n\n"), 0, 4);
+
+
+        ui.add(button, 0, 5);
+        ui.add(spring, 0, 6);
+        ui.add(new Label("Inventory: "), 0, 7);
+        ui.add(inventoryLabel, 0, 8);
 
         button.setDisable(true);
         button.setFocusTraversable(false);
@@ -198,6 +209,7 @@ public class Main extends Application {
             }
         }
         healthLabel.setText("" + currentMap.getPlayer().getHealth());
+        strengthLabel.setText("" + currentMap.getPlayer().getStrength());
         List<Item> fullInventory = currentMap.getPlayer().getInventory();
         inventoryLabel.setText("");
         for (Item item : fullInventory) {
