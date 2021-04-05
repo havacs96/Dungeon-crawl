@@ -37,7 +37,11 @@ public class MapLoader {
                             break;
                         case '@':
                             cell.setType(CellType.FLOOR);
+<<<<<<< HEAD
                             map.setPlayer(new Player(cell, "Player"));
+=======
+                            map.setPlayer(new Player(cell));
+>>>>>>> dungeon-crawl-1-java-technorbi/master
                             break;
                         default:
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");

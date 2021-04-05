@@ -1,27 +1,39 @@
 package com.codecool.dungeoncrawl;
 
+<<<<<<< HEAD
 import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actors.Player;
+=======
+import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.GameMap;
+import com.codecool.dungeoncrawl.logic.MapLoader;
+>>>>>>> dungeon-crawl-1-java-technorbi/master
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
+<<<<<<< HEAD
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
+=======
+>>>>>>> dungeon-crawl-1-java-technorbi/master
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+<<<<<<< HEAD
 import java.sql.SQLException;
 
+=======
+>>>>>>> dungeon-crawl-1-java-technorbi/master
 public class Main extends Application {
     GameMap map = MapLoader.loadMap();
     Canvas canvas = new Canvas(
@@ -29,7 +41,10 @@ public class Main extends Application {
             map.getHeight() * Tiles.TILE_WIDTH);
     GraphicsContext context = canvas.getGraphicsContext2D();
     Label healthLabel = new Label();
+<<<<<<< HEAD
     GameDatabaseManager dbManager;
+=======
+>>>>>>> dungeon-crawl-1-java-technorbi/master
 
     public static void main(String[] args) {
         launch(args);
@@ -37,7 +52,10 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+<<<<<<< HEAD
         setupDbManager();
+=======
+>>>>>>> dungeon-crawl-1-java-technorbi/master
         GridPane ui = new GridPane();
         ui.setPrefWidth(200);
         ui.setPadding(new Insets(10));
@@ -54,12 +72,16 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         refresh();
         scene.setOnKeyPressed(this::onKeyPressed);
+<<<<<<< HEAD
         scene.setOnKeyReleased(this::onKeyReleased);
+=======
+>>>>>>> dungeon-crawl-1-java-technorbi/master
 
         primaryStage.setTitle("Dungeon Crawl");
         primaryStage.show();
     }
 
+<<<<<<< HEAD
     private void onKeyReleased(KeyEvent keyEvent) {
         KeyCombination exitCombinationMac = new KeyCodeCombination(KeyCode.W, KeyCombination.SHORTCUT_DOWN);
         KeyCombination exitCombinationWin = new KeyCodeCombination(KeyCode.F4, KeyCombination.ALT_DOWN);
@@ -70,6 +92,8 @@ public class Main extends Application {
         }
     }
 
+=======
+>>>>>>> dungeon-crawl-1-java-technorbi/master
     private void onKeyPressed(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
             case UP:
@@ -85,6 +109,7 @@ public class Main extends Application {
                 refresh();
                 break;
             case RIGHT:
+<<<<<<< HEAD
                 map.getPlayer().move(1, 0);
                 refresh();
                 break;
@@ -92,6 +117,11 @@ public class Main extends Application {
                 Player player = map.getPlayer();
                 dbManager.savePlayer(player);
                 break;
+=======
+                map.getPlayer().move(1,0);
+                refresh();
+                break;
+>>>>>>> dungeon-crawl-1-java-technorbi/master
         }
     }
 
@@ -110,6 +140,7 @@ public class Main extends Application {
         }
         healthLabel.setText("" + map.getPlayer().getHealth());
     }
+<<<<<<< HEAD
 
     private void setupDbManager() {
         dbManager = new GameDatabaseManager();
@@ -128,4 +159,6 @@ public class Main extends Application {
         }
         System.exit(0);
     }
+=======
+>>>>>>> dungeon-crawl-1-java-technorbi/master
 }
