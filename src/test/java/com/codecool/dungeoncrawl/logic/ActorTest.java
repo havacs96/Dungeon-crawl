@@ -2,6 +2,9 @@ package com.codecool.dungeoncrawl.logic;
 
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.actors.Skeleton;
+import com.codecool.dungeoncrawl.logic.actors.EnemyType;
+import com.codecool.dungeoncrawl.logic.actors.Player;
+import com.codecool.dungeoncrawl.logic.actors.Enemy;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -50,5 +53,12 @@ class ActorTest {
         assertEquals(2, skeleton.getX());
         assertEquals(1, skeleton.getY());
         assertEquals(skeleton, gameMap.getCell(2, 1).getActor());
+        Enemy monster = new Enemy(gameMap.getCell(2, 1), EnemyType.SKELETON);
+        player.move(1, 0);
+        assertEquals(1, player.getX());
+        assertEquals(1, player.getY());
+        assertEquals(2, monster.getX());
+        assertEquals(1, monster.getY());
+        assertEquals(monster, gameMap.getCell(2, 1).getActor());
     }
 }

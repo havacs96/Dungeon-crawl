@@ -2,10 +2,13 @@ package com.codecool.dungeoncrawl.logic.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.Drawable;
+import java.util.Arrays;
 
 public abstract class Actor implements Drawable {
-    private Cell cell;
-    private int health = 10;
+    protected Cell cell;
+    private int health;
+    private int strength;
+
 
     public Actor(Cell cell) {
         this.cell = cell;
@@ -19,12 +22,28 @@ public abstract class Actor implements Drawable {
         cell = nextCell;
     }
 
+    public int getStrength() {
+        return strength;
+    }
+
+    public void setStrength(int strength) {
+        this.strength = strength;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
     public int getHealth() {
         return health;
     }
 
     public Cell getCell() {
         return cell;
+    }
+
+    public void setCell(Cell cell) {
+        this.cell = cell;
     }
 
     public int getX() {

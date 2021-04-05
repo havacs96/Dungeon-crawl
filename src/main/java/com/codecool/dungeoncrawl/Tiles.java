@@ -10,7 +10,7 @@ import java.util.Map;
 public class Tiles {
     public static int TILE_WIDTH = 32;
 
-    private static Image tileset = new Image("/tiles.png", 543 * 2, 543 * 2, true, false);
+    private static Image tileset = new Image("/tiles2.png", 539 * 6, 538 * 6, true, false);
     private static Map<String, Tile> tileMap = new HashMap<>();
     public static class Tile {
         public final int x, y, w, h;
@@ -23,11 +23,51 @@ public class Tiles {
     }
 
     static {
-        tileMap.put("empty", new Tile(0, 0));
-        tileMap.put("wall", new Tile(10, 17));
-        tileMap.put("floor", new Tile(2, 0));
-        tileMap.put("player", new Tile(27, 0));
-        tileMap.put("skeleton", new Tile(29, 6));
+        // Simple
+        tileMap.put("empty", new Tile(0, 0)); // ' '
+        // Walls
+        tileMap.put("wall", new Tile(6, 19)); // #
+        tileMap.put("wall2", new Tile(44, 18)); // &
+        tileMap.put("wall3", new Tile(34, 16)); // $
+        // Floors
+        tileMap.put("floor", new Tile(12, 9)); // .
+        tileMap.put("floor2", new Tile(49, 6)); // _
+        tileMap.put("floor3", new Tile(14, 3)); // ß
+        tileMap.put("lava", new Tile(63, 5)); // |
+        // Doors
+        tileMap.put("doorlvl1out", new Tile(36, 10)); // D
+        tileMap.put("doorlvl2in", new Tile(38, 10)); // U
+        tileMap.put("doorlvl2out", new Tile(46, 10)); // P
+        tileMap.put("doorlvl3in", new Tile(46, 11)); // I
+        // Others
+        tileMap.put("tree", new Tile(13, 13)); // T
+        tileMap.put("statue", new Tile(27, 13)); // 1
+        tileMap.put("altar", new Tile(45, 0)); // 2
+        tileMap.put("statue2", new Tile(40, 12)); // 3
+        tileMap.put("grave", new Tile(57, 0)); // 4
+        // Player
+        tileMap.put("player", new Tile(19, 68)); // @
+        // Enemies
+        tileMap.put("monster", new Tile(20, 60)); // M
+        tileMap.put("skeleton", new Tile(17, 74)); // S
+        tileMap.put("hellboy", new Tile(24, 65)); // H
+        tileMap.put("ghost", new Tile(24, 65)); // G
+        // Keys
+        tileMap.put("bronze", new Tile(55, 40)); // K
+        tileMap.put("silver", new Tile(56, 40)); // i
+        tileMap.put("gold", new Tile(57, 40)); // ?
+        // Items
+        tileMap.put("crossbow", new Tile(16, 49)); // c
+        tileMap.put("sword", new Tile(15, 48)); // s
+        tileMap.put("axe", new Tile(29, 48)); // a
+        // Potions
+        tileMap.put("weak healing potion", new Tile(23, 42)); // p
+        tileMap.put("strong healing potion", new Tile(23, 43)); // m
+        tileMap.put("extra healing potion", new Tile(23, 44));  // b
+        // bosses
+        tileMap.put("wizzard", new Tile(17, 59)); // x
+        tileMap.put("knight", new Tile(26, 59)); // y
+        tileMap.put("molten", new Tile(49, 59)); // z
     }
 
     public static void drawTile(GraphicsContext context, Drawable d, int x, int y) {

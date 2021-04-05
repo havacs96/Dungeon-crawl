@@ -1,9 +1,28 @@
 package com.codecool.dungeoncrawl.logic;
 
 public enum CellType {
-    EMPTY("empty"),
+
+    // can collide
     FLOOR("floor"),
-    WALL("wall");
+    FLOOR2("floor2"),
+    FLOOR3("floor3"),
+    LAVA("lava"),
+    DOOR1("doorlvl1out"),
+    DOOR2("doorlvl2in"),
+    DOOR3("doorlvl2out"),
+    DOOR4("doorlvl3in"),
+
+    // cannot collide
+    EMPTY("empty"),
+    WALL("wall"),
+    WALL2("wall2"),
+    WALL3("wall3"),
+    TREE("tree"),
+    STATUE("statue"),
+    STATUE2("statue2"),
+    ALTAR("altar"),
+    GRAVE("grave");
+
 
     private final String tileName;
 
