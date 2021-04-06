@@ -18,6 +18,7 @@ public class Player extends Actor {
     private int strength = 100;
     private boolean onDoorDown = false;
     private boolean onDoorUp = false;
+    private String name;
 
 
     public Player(Cell cell) {
@@ -112,6 +113,14 @@ public class Player extends Actor {
 
     public void setHealth(int health) {
         this.health = health;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public boolean isOnDoorDown() {

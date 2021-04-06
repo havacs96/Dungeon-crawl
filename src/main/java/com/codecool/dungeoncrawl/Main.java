@@ -15,10 +15,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
@@ -42,6 +39,8 @@ public class Main extends Application {
     Label strengthLabel = new Label();
     Label inventoryLabel = new Label();
     Button button = new Button("Pick Up!");
+    Button submitButton = new Button("Submit");
+    Label name = new Label();
 
 
     List<Enemy> enemies;
@@ -86,23 +85,38 @@ public class Main extends Application {
         // ui
         GridPane ui = new GridPane();
 
-        ui.setPrefWidth(200);
+        ui.setPrefWidth(300);
         ui.setPadding(new Insets(10));
 
         final Pane spring = new Pane();
-        ui.add(new Label("Health: "), 0, 0);
-        ui.add(healthLabel, 1, 0);
-        ui.add(new Label("Strength: "), 0, 1);
-        ui.add(strengthLabel, 1, 1);
-        ui.add(new Label("Use weak health \n potion with key: w \n\n"), 0, 2);
-        ui.add(new Label("Use strong health \n potion with key: s \n"), 0, 3);
-        ui.add(new Label("Use extra health \n potion with key: e \n\n"), 0, 4);
 
 
-        ui.add(button, 0, 5);
-        ui.add(spring, 0, 6);
-        ui.add(new Label("Inventory: "), 0, 7);
-        ui.add(inventoryLabel, 0, 8);
+        TextField textField = new TextField();
+        HBox hbox = new HBox(textField, submitButton);
+        ui.add(hbox, 0, 0);
+
+        submitButton.setOnAction(action -> {
+            String inputName = textField.getText();
+            name.setText(inputName);
+            currentMap.getPlayer().setName(inputName);
+            ui.getChildren().remove(hbox);
+            ui.add(new Label("Player's name: "), 0, 0);
+            ui.add(name, 1, 0);
+        });
+
+        ui.add(new Label("Health: "), 0, 1);
+        ui.add(healthLabel, 1, 1);
+        ui.add(new Label("Strength: "), 0, 2);
+        ui.add(strengthLabel, 1, 2);
+        ui.add(new Label("Use weak health \n potion with key: w \n\n"), 0, 3);
+        ui.add(new Label("Use strong health \n potion with key: a \n"), 0, 4);
+        ui.add(new Label("Use extra health \n potion with key: e \n\n"), 0, 5);
+
+
+        ui.add(button, 0, 6);
+        ui.add(spring, 0, 7);
+        ui.add(new Label("Inventory: "), 0, 8);
+        ui.add(inventoryLabel, 0, 9);
 
         button.setDisable(true);
         button.setFocusTraversable(false);
@@ -181,7 +195,7 @@ public class Main extends Application {
                 currentMap.getPlayer().usePotion("w");
                 refresh();
                 break;
-            case S:
+            case A:
                 currentMap.getPlayer().usePotion("s");
                 refresh();
                 break;
@@ -189,7 +203,7 @@ public class Main extends Application {
                 currentMap.getPlayer().usePotion("e");
                 refresh();
                 break;
-            case Q:
+            case S:
                 Player player = currentMap.getPlayer();
                 dbManager.savePlayer(player);
                 break;
