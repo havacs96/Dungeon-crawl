@@ -19,6 +19,8 @@ public class Player extends Actor {
     private boolean onDoorDown = false;
     private boolean onDoorUp = false;
     private String name;
+    private int loadedX;
+    private int loadedY;
 
 
     public Player(Cell cell) {
@@ -129,6 +131,22 @@ public class Player extends Actor {
 
     public boolean isOnDoorUp() {
         return onDoorUp;
+    }
+
+    public int getLoadedX() {
+        return loadedX;
+    }
+
+    public void setLoadedX(int loadedX) {
+        this.loadedX = loadedX;
+    }
+
+    public int getLoadedY() {
+        return loadedY;
+    }
+
+    public void setLoadedY(int loadedY) {
+        this.loadedY = loadedY;
     }
 
     @Override
