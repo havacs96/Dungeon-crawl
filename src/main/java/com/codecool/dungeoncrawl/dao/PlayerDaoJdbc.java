@@ -87,9 +87,12 @@ public class PlayerDaoJdbc implements PlayerDao {
     @Override
     public List<PlayerModel> getAll() {
         try (Connection conn = dataSource.getConnection()) {
-            String sql = "SELECT player_name, strength, health, x, y) FROM player";
+            String sql = "SELECT player_name, strength, health, x, y FROM player";
             ResultSet rs = conn.createStatement().executeQuery(sql);
             List<PlayerModel> playerModels = new ArrayList<>();
+            if (!rs.isBeforeFirst()) {
+                return null;
+            }
             while(!rs.next()){
 
                 Player player = new Player(null);
