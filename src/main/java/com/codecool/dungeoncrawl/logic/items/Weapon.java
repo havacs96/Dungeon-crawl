@@ -16,4 +16,8 @@ public class Weapon extends Item {
         return weaponName;
     }
 
+    @Override
+    public void setType(String type) {
+        super.setType("Weapon");
+    }
 }

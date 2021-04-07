@@ -16,4 +16,9 @@ public class Key extends Item {
         return KeyType;
     }
 
+
+    @Override
+    public void setType(String type) {
+        super.setType("Key");
+    }
 }

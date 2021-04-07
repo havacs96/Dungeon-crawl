@@ -20,4 +20,8 @@ public class Potion extends Item {
         return potionName;
     }
 
+    @Override
+    public void setType(String type) {
+        super.setType("Potion");
+    }
 }
