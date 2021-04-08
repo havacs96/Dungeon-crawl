@@ -78,6 +78,7 @@ public class MapSaver {
                         throw new RuntimeException("Unrecognized character: ");
                 }
             }
+            mapText += "\n";
         }
         return mapText;
     }
