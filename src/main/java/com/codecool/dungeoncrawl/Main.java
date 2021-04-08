@@ -236,13 +236,15 @@ public class Main extends Application {
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         for (int x = 0; x < currentMap.getWidth(); x++) {
             for (int y = 0; y < currentMap.getHeight(); y++) {
+                int centeredX = x - currentMap.getPlayer().getX() + 11;
+                int centeredY = y - currentMap.getPlayer().getY() + 11;
                 Cell cell = currentMap.getCell(x, y);
                 if (cell.getActor() != null) {
-                    Tiles.drawTile(context, cell.getActor(), x, y);
+                    Tiles.drawTile(context, cell.getActor(), centeredX, centeredY);
                 }else if (cell.getItem() != null) {
-                    Tiles.drawTile(context, cell.getItem(), x, y);
+                    Tiles.drawTile(context, cell.getItem(), centeredX, centeredY);
                 } else {
-                    Tiles.drawTile(context, cell, x, y);
+                    Tiles.drawTile(context, cell, centeredX, centeredY);
                 }
             }
         }
