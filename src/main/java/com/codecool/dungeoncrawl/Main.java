@@ -1,5 +1,6 @@
 package com.codecool.dungeoncrawl;
 
+import com.codecool.dungeoncrawl.dao.PlayerDaoJdbc;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
@@ -13,21 +14,27 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 
-import java.sql.SQLException;
 
+
+import javax.sql.DataSource;
+import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +54,7 @@ public class Main extends Application {
     Button submitButton = new Button("Submit");
     Label name = new Label();
     GridPane ui = new GridPane();
+    GameDatabaseManager gameDatabaseManager = new GameDatabaseManager();
 
 
     List<Enemy> enemies;
@@ -82,6 +90,7 @@ public class Main extends Application {
         MenuItem fileSeparator = new SeparatorMenuItem();
         MenuItem fileExit = new MenuItem("Exit");
         fileExit.setOnAction(e -> Platform.exit());
+        fileLoad.setOnAction(e -> loadGame());
 
         file.getItems().addAll(fileRestart, fileSave, fileLoad, fileSeparator, fileExit);
 
@@ -253,6 +262,9 @@ public class Main extends Application {
             case S:
                 Player player = currentMap.getPlayer();
                 dbManager.save(player, maps);
+                if (keyEvent.isControlDown()) {
+                    gameDatabaseManager.isPlayerExistsInDb(player.getName());
+                }
                 break;
             case L:
 
@@ -261,7 +273,74 @@ public class Main extends Application {
                 changePlayerStats(currentMap.getPlayer());
                 refresh();
                 break;
+            case M:
+                showMiniMap();
+                break;
         }
+    }
+
+    private void showMiniMap() {
+
+        Stage MiniMap = new Stage();
+
+        MiniMap.initModality(Modality.APPLICATION_MODAL);
+        MiniMap.setTitle("MINIMAP");
+
+        Label map1 = new Label();
+
+        Image img1 = new Image("/minimap1.png");
+        ImageView view1 = new ImageView(img1);
+        Image img2 = new Image("/minimap2.png");
+        ImageView view2 = new ImageView(img2);
+        Image img3 = new Image("/minimap3.png");
+        ImageView view3 = new ImageView(img3);
+
+        view1.setPreserveRatio(true);
+        view2.setPreserveRatio(true);
+        view3.setPreserveRatio(true);
+
+        if (currentMapIndex == 0){
+            map1.setGraphic(view1);
+        }
+        else if (currentMapIndex == 1){
+            map1.setGraphic(view2);
+        }
+        else if (currentMapIndex == 2) {
+            map1.setGraphic(view3);
+        }
+
+        VBox layout = new VBox(10);
+
+        layout.getChildren().addAll(map1);
+        layout.setAlignment(Pos.CENTER);
+
+        Scene scene1 = new Scene(layout, 499, 400);
+
+        MiniMap.setScene(scene1);
+        MiniMap.show();
+
+    }
+
+
+    private void loadGame() {
+
+        Stage loadGame = new Stage();
+
+        loadGame.initModality(Modality.APPLICATION_MODAL);
+        loadGame.setTitle("LOAD GAME");
+
+        VBox layout = new VBox(10);
+
+        Label load = new Label();
+
+        layout.getChildren().addAll(load);
+        layout.setAlignment(Pos.CENTER);
+
+        Scene scene1 = new Scene(layout, 300, 300);
+
+        loadGame.setScene(scene1);
+        loadGame.show();
+
     }
 
 
@@ -400,5 +479,6 @@ public class Main extends Application {
         }
         System.exit(0);
     }
+
 }
 

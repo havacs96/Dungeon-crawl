@@ -92,4 +92,8 @@ public class GameDatabaseManager {
 
         return dataSource;
     }
+
+    public boolean isPlayerExistsInDb(String playerName) {
+        return playerDao.getId(playerName) != -1;
+    }
 }
