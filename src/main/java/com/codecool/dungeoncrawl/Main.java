@@ -87,6 +87,7 @@ public class Main extends Application {
 
         ui.setPrefWidth(300);
         ui.setPadding(new Insets(10));
+        ui.setStyle("-fx-background-color: #472D3C");
 
         final Pane spring = new Pane();
 
@@ -256,7 +257,7 @@ public class Main extends Application {
     }
 
     private void addMaps(){
-        String[] mapFiles = {"/map.txt", "/map2.txt", "/map3.txt"};
+        String[] mapFiles = {"/map1.txt", "/map2.txt", "/map3.txt"};
         for (String mapFile : mapFiles) {
             maps.add(MapLoader.loadMap(mapFile));
         }
