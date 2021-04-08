@@ -13,8 +13,7 @@ public class GameState extends BaseModel {
     private String map3;
     private int playerID;
 
-    public GameState(Timestamp savedAt, String map1, String map2, String map3, int playerID) {
-        this.savedAt = savedAt;
+    public GameState(String map1, String map2, String map3, int playerID) {
         this.map1 = map1;
         this.map2 = map2;
         this.map3 = map3;

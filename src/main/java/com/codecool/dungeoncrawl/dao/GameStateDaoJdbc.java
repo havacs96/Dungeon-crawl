@@ -100,7 +100,8 @@ public class GameStateDaoJdbc implements GameStateDao {
                 String map2 = rs.getString(3);
                 String map3 = rs.getString(4);
 
-                GameState state = new GameState(savedAt, map1, map2, map3, player.getId());
+                GameState state = new GameState(map1, map2, map3, player.getId());
+                state.setSavedAt(savedAt);
                 state.setCurrentMap(rs.getInt(1));
             }
             return GameStates;
