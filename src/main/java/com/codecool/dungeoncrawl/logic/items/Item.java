@@ -6,7 +6,7 @@ import com.codecool.dungeoncrawl.logic.Drawable;
 public abstract class Item implements Drawable {
 
     private Cell cell;
-    private String itemType;
+    protected String itemType;
 
     public Item (Cell cell) {
         this.cell = cell;
@@ -19,9 +19,5 @@ public abstract class Item implements Drawable {
 
     public String getType() {
         return itemType;
-    }
-
-    public void setType(String type) {
-        this.itemType = type;
     }
 }

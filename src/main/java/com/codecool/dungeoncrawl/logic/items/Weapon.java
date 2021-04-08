@@ -9,15 +9,11 @@ public class Weapon extends Item {
     public Weapon(Cell cell, WeaponType weaponName) {
         super(cell);
         this.weaponName = weaponName.getWeaponName();
+        itemType = "Weapon";
     }
 
     @Override
     public String getTileName() {
         return weaponName;
-    }
-
-    @Override
-    public void setType(String type) {
-        super.setType("Weapon");
     }
 }

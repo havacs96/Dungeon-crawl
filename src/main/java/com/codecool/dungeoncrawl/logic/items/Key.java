@@ -9,16 +9,11 @@ public class Key extends Item {
     public Key(Cell cell, KeyType type) {
         super(cell);
         KeyType = type.getKeyName();
+        itemType = "Key";
     }
 
     @Override
     public String getTileName() {
         return KeyType;
-    }
-
-
-    @Override
-    public void setType(String type) {
-        super.setType("Key");
     }
 }

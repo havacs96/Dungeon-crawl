@@ -13,6 +13,7 @@ public class Potion extends Item {
         this.type = type;
         this.potionName = type.getPotionName();
         this.healthPlus = type.getHealthPlus();
+        itemType = "Potion";
     }
 
     @Override
@@ -20,8 +21,4 @@ public class Potion extends Item {
         return potionName;
     }
 
-    @Override
-    public void setType(String type) {
-        super.setType("Potion");
-    }
 }
