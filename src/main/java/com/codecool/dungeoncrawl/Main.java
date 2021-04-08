@@ -1,6 +1,5 @@
 package com.codecool.dungeoncrawl;
 
-import com.codecool.dungeoncrawl.dao.PlayerDaoJdbc;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
@@ -32,13 +31,10 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 
 
-
-import javax.sql.DataSource;
 import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 
 public class Main extends Application {
@@ -54,7 +50,6 @@ public class Main extends Application {
     Button submitButton = new Button("Submit");
     Label name = new Label();
     GridPane ui = new GridPane();
-    GameDatabaseManager gameDatabaseManager = new GameDatabaseManager();
 
 
     List<Enemy> enemies;
@@ -260,10 +255,14 @@ public class Main extends Application {
                 refresh();
                 break;
             case S:
-                Player player = currentMap.getPlayer();
-                dbManager.save(player, maps);
                 if (keyEvent.isControlDown()) {
-                    gameDatabaseManager.isPlayerExistsInDb(player.getName());
+                    if(!dbManager.isPlayerExistsInDb(currentMap.getPlayer().getName())){
+                        dbManager.save(currentMap.getPlayer(), maps);
+
+
+                    }else {
+                        isSave(currentMap.getPlayer());
+                    }
                 }
                 break;
             case L:
@@ -277,6 +276,35 @@ public class Main extends Application {
                 showMiniMap();
                 break;
         }
+    }
+
+    private void isSave(Player player) {
+        Stage confirmWindow = new Stage();
+
+        confirmWindow.initModality(Modality.APPLICATION_MODAL);
+        confirmWindow.setTitle("Confirmation");
+
+        Label label1 = new Label("Would you like to overwrite \n the already existing state or rename and save?");
+        Button yesButton = new Button("Overwrite");
+        Button noButton = new Button("Rename and save");
+
+        yesButton.setOnAction(value -> {
+            dbManager.update(player, maps, currentMapIndex);
+            confirmWindow.close();
+        });
+
+        noButton.setOnAction(e -> confirmWindow.close());
+
+        VBox layout = new VBox(10);
+
+        layout.getChildren().addAll(label1, yesButton, noButton);
+        layout.setAlignment(Pos.CENTER);
+
+        Scene scene1 = new Scene(layout, 250, 200);
+
+        confirmWindow.setScene(scene1);
+
+        confirmWindow.showAndWait();
     }
 
     private void showMiniMap() {

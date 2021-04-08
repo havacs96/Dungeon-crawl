@@ -59,6 +59,29 @@ public class GameDatabaseManager {
         saveGameState(gameMaps,playerModel);
     }
 
+    public void update(Player player, List<GameMap> gameMaps, int currentMapIndex){
+        PlayerModel playerModel = new PlayerModel(player);
+        playerDao.update(playerModel);
+        for (Item item : player.getInventory()) {
+            ItemModel itemModel = new ItemModel(item,playerModel.getId());
+            playerInventoryDao.remove(itemModel);
+        };
+        for (Item item : player.getInventory()) {
+            ItemModel itemModel = new ItemModel(item,playerModel.getId());
+            playerInventoryDao.add(itemModel);
+        };
+        List<String> stringMaps = new ArrayList<>();
+        for (GameMap gameMap : gameMaps) {
+            MapSaver mapSaver = new MapSaver();
+            stringMaps.add(mapSaver.SaveMap(gameMap));
+        }
+        int id = playerDao.getId(player.getName());
+        GameState gameState = new GameState(stringMaps.get(0), stringMaps.get(1), stringMaps.get(2), id);
+        gameState.setCurrentMap(currentMapIndex);
+        gameStateDao.update(gameState);
+
+    }
+
     public void saveInventory(List<Item> items, PlayerModel playerModel) {
         for (Item item : items) {
             ItemModel itemModel = new ItemModel(item, playerModel.getId());
@@ -94,6 +117,6 @@ public class GameDatabaseManager {
     }
 
     public boolean isPlayerExistsInDb(String playerName) {
-        return playerDao.getId(playerName) != -1;
+        return (playerDao.getId(playerName) != -1);
     }
 }

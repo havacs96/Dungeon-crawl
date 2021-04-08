@@ -38,7 +38,7 @@ public class PlayerDaoJdbc implements PlayerDao {
     @Override
     public void update(PlayerModel player) {
         try (Connection conn = dataSource.getConnection()) {
-            String sql = "UPDATE player SET (player_name = ?, strength = ?, health = ?, x = ?, y = ?) " +
+            String sql = "UPDATE player SET player_name = ?, strength = ?, health = ?, x = ?, y = ? " +
                     "WHERE player_name LIKE ?";
             PreparedStatement st = conn.prepareStatement(sql);
             st.setString(1, player.getPlayerName());
@@ -67,8 +67,6 @@ public class PlayerDaoJdbc implements PlayerDao {
             if(!rs.next()){
                 return null;
             }
-
-
             Player player = new Player(null);
             player.setName(rs.getString(1));
             player.setStrength(rs.getInt(2));
@@ -123,11 +121,14 @@ public class PlayerDaoJdbc implements PlayerDao {
 
     public int getId(String playerName) {
         try (Connection conn = dataSource.getConnection()) {
-            String sql = "SELECT id FROM player" +
+            String sql = "SELECT id FROM player " +
                     "WHERE player_name LIKE ?";
             PreparedStatement st = conn.prepareStatement(sql);
             st.setString(1,playerName);
             ResultSet rs = st.executeQuery();
+            if (!rs.isBeforeFirst()) {
+                return -1;
+            }
             if(!rs.next()){
                 return -1;
             }
