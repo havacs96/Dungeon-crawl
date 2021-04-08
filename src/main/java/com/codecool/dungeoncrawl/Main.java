@@ -265,12 +265,6 @@ public class Main extends Application {
                     }
                 }
                 break;
-            case L:
-                maps.clear();
-                addMapsOnLoad("név");
-                changePlayerStats(currentMap.getPlayer());
-                refresh();
-                break;
             case M:
                 showMiniMap();
                 break;
@@ -286,17 +280,23 @@ public class Main extends Application {
         Label label1 = new Label("Would you like to overwrite \n the already existing state or rename and save?");
         Button yesButton = new Button("Overwrite");
         Button noButton = new Button("Rename and save");
+        TextField newName = new TextField();
 
         yesButton.setOnAction(value -> {
             dbManager.update(player, maps, currentMapIndex);
             confirmWindow.close();
         });
 
-        noButton.setOnAction(e -> confirmWindow.close());
+        noButton.setOnAction(e -> {
+            player.setName(newName.getText());
+            name.setText(player.getName());
+            dbManager.save(currentMap.getPlayer(), maps);
+            confirmWindow.close();
+        });
 
         VBox layout = new VBox(10);
 
-        layout.getChildren().addAll(label1, yesButton, noButton);
+        layout.getChildren().addAll(label1, yesButton, noButton, newName);
         layout.setAlignment(Pos.CENTER);
 
         Scene scene1 = new Scene(layout, 250, 200);
@@ -359,14 +359,22 @@ public class Main extends Application {
         VBox layout = new VBox(10);
 
         Label load = new Label();
+        Label names = new Label();
+        for (String name : dbManager.loadSaves()) {
+            names.setText(names + "\n" + name);
+        }
+        TextField chosenName = new TextField();
+        layout.getChildren().addAll(load, names, chosenName);
 
-        layout.getChildren().addAll(load);
         layout.setAlignment(Pos.CENTER);
-
         Scene scene1 = new Scene(layout, 300, 300);
 
         loadGame.setScene(scene1);
         loadGame.show();
+        maps.clear();
+        addMapsOnLoad(chosenName.getText());
+        changePlayerStats(currentMap.getPlayer());
+        refresh();
 
     }
 
@@ -438,8 +446,7 @@ public class Main extends Application {
     }
 
     public void addMapsOnLoad(String playerName) {
-        GameDatabaseManager gameDatabaseManager = new GameDatabaseManager();
-        List<GameState> gameMaps = gameDatabaseManager.loadGameMaps(playerName);
+        List<GameState> gameMaps = dbManager.loadGameMaps(playerName);
         for (GameState gameMap : gameMaps) {
             String map1 = gameMap.getMap1();
             String map2 = gameMap.getMap2();

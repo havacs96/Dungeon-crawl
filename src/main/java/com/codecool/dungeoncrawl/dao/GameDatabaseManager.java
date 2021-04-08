@@ -38,7 +38,7 @@ public class GameDatabaseManager {
     public List<GameState> loadGameMaps(String playerName){
         int id = playerDao.getId(playerName);
         PlayerModel playerModel = playerDao.get(id);
-        return gameStateDao.getAll(playerModel);
+        return gameStateDao.getAll(playerModel, id);
     }
 
     public List<ItemModel> loadInventory(String playerName){
