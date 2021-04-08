@@ -1,4 +1,5 @@
 package com.codecool.dungeoncrawl.logic;
+
 import com.codecool.dungeoncrawl.logic.actors.EnemyType;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.actors.Enemy;
@@ -6,18 +7,27 @@ import com.codecool.dungeoncrawl.logic.items.*;
 
 import java.io.InputStream;
 import java.util.Scanner;
+import org.apache.commons.io.IOUtils;
 
 public class MapLoader {
+
     public static GameMap loadMap(String mapT) {
-        InputStream is = MapLoader.class.getResourceAsStream(mapT);
+
+        InputStream is;
+        if (mapT.contains(".txt")) {
+            is = MapLoader.class.getResourceAsStream(mapT);
+        }else{
+            is = IOUtils.toInputStream(mapT);
+        }
+
         Scanner scanner = new Scanner(is);
         int width = scanner.nextInt();
         int height = scanner.nextInt();
 
-        scanner.nextLine(); // empty line
-
+        scanner.nextLine();
         GameMap map = new GameMap(width, height, CellType.EMPTY);
         for (int y = 0; y < height; y++) {
+
             String line = scanner.nextLine();
             for (int x = 0; x < width; x++) {
                 if (x < line.length()) {

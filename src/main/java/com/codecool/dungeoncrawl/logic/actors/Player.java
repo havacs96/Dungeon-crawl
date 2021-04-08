@@ -73,6 +73,8 @@ public class Player extends Actor {
         return inventory;
     }
 
+    public void addItemToInventoryOnLoad(Item item){inventory.add(item);}
+
     public void addItemToInventory() {
         inventory.add(this.getCell().getItem());
         if(this.getCell().getItem() instanceof Weapon){addStatsToPlayer();}
@@ -91,6 +93,8 @@ public class Player extends Actor {
             this.setStrength(this.getStrength() + WeaponType.SWORD.getPlusStrength());
         }
     }
+
+    public void clearInventory() {this.inventory.clear();}
 
     public void removeItem() {
         this.getCell().setItem(null);
