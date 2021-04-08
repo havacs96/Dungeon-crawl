@@ -10,13 +10,17 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
@@ -42,6 +46,7 @@ public class Main extends Application {
     Button submitButton = new Button("Submit");
     Label name = new Label();
     GridPane ui = new GridPane();
+    static GameMap staticCurrentMap;
 
 
     List<Enemy> enemies;
@@ -251,7 +256,53 @@ public class Main extends Application {
                 Player player = currentMap.getPlayer();
                 dbManager.save(player, maps);
                 break;
+            case M:
+                showMiniMap();
+                break;
         }
+    }
+
+    private void showMiniMap() {
+
+        Stage MiniMap = new Stage();
+
+        MiniMap.initModality(Modality.APPLICATION_MODAL);
+        MiniMap.setTitle("MINIMAP");
+
+        Label map1 = new Label();
+        Image img1 = new Image("/minimap1.png");
+        ImageView view1 = new ImageView(img1);
+        Image img2 = new Image("/minimap2.png");
+        ImageView view2 = new ImageView(img2);
+        Image img3 = new Image("/minimap1.png");
+        ImageView view3 = new ImageView(img3);
+        view1.setPreserveRatio(true);
+        view2.setPreserveRatio(true);
+        view3.setPreserveRatio(true);
+
+        if (currentMapIndex == 0){
+            map1.setGraphic(view1);
+        }
+        else if (currentMapIndex == 1){
+            map1.setGraphic(view2);
+        }
+        else if (currentMapIndex == 2) {
+            map1.setGraphic(view3);
+        }
+
+
+        VBox layout = new VBox(10);
+
+        layout.getChildren().addAll(map1);
+        layout.setAlignment(Pos.CENTER);
+
+        Scene scene1 = new Scene(layout, 499, 400);
+
+        MiniMap.setScene(scene1);
+
+        MiniMap.show();
+
+
     }
 
 
@@ -328,5 +379,6 @@ public class Main extends Application {
         }
         System.exit(0);
     }
+
 }
 
