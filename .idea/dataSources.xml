@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="dungeon-crawl@localhost" uuid="2c42ed50-dbc6-4278-afec-2513387c3990">
+    <data-source source="LOCAL" name="dungeon-crawl@localhost" uuid="687ec2a6-8218-42c9-a0f5-29b623be6876">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://localhost:5432/dungeon-crawl</jdbc-url>
-    </data-source>
-    <data-source source="LOCAL" name="postgres@localhost" uuid="076cd9ef-eec2-4034-a85b-60c383534614">
-      <driver-ref>postgresql</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5432/postgres</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
 </project>

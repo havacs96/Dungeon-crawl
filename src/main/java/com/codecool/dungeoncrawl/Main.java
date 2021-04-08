@@ -6,7 +6,10 @@ import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actors.Enemy;
 import com.codecool.dungeoncrawl.logic.actors.Player;
-import com.codecool.dungeoncrawl.logic.items.Item;
+import com.codecool.dungeoncrawl.logic.items.*;
+import com.codecool.dungeoncrawl.model.GameState;
+import com.codecool.dungeoncrawl.model.ItemModel;
+import com.codecool.dungeoncrawl.model.PlayerModel;
 import javafx.application.Application;
 import javafx.application.Platform;
 import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
@@ -28,12 +31,14 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 
+
+
 import javax.sql.DataSource;
 import java.sql.SQLException;
 
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 
 public class Main extends Application {
@@ -169,7 +174,7 @@ public class Main extends Application {
             List<Item> fullInventory = currentMap.getPlayer().getInventory();
             inventoryLabel.setText("");
             for (Item item : fullInventory) {
-                inventoryLabel.setText("" +inventoryLabel.getText() + "\n" + item.getTileName());
+                inventoryLabel.setText("" + inventoryLabel.getText() + "\n" + item.getTileName());
             }
 
         });
@@ -204,22 +209,20 @@ public class Main extends Application {
     public void changeGridColor() {
         if (currentMapIndex == 0) {
             ui.setStyle("-fx-background-color: #000000");
-        }
-        else if (currentMapIndex == 1) {
+        } else if (currentMapIndex == 1) {
             ui.setStyle("-fx-background-color: #8a6500");
-        }
-        else if (currentMapIndex == 2) {
+        } else if (currentMapIndex == 2) {
             ui.setStyle("-fx-background-color: #c20000");
         }
     }
 
 
-    public void changeButtonStateOnItem(){
+    public void changeButtonStateOnItem() {
         if (currentMap.getPlayer().isOnItem()) {
             button.setDisable(false);
         } else {
             button.setDisable(true);
-            }
+        }
     }
 
     private void onKeyPressed(KeyEvent keyEvent) {
@@ -240,7 +243,7 @@ public class Main extends Application {
                 refresh();
                 break;
             case RIGHT:
-                currentMap.getPlayer().move(1,0);
+                currentMap.getPlayer().move(1, 0);
                 changeButtonStateOnItem();
                 refresh();
                 break;
@@ -262,6 +265,13 @@ public class Main extends Application {
                 if (keyEvent.isControlDown()) {
                     gameDatabaseManager.isPlayerExistsInDb(player.getName());
                 }
+                break;
+            case L:
+
+                maps.clear();
+                addMapsOnLoad("név");
+                changePlayerStats(currentMap.getPlayer());
+                refresh();
                 break;
             case M:
                 showMiniMap();
@@ -336,7 +346,7 @@ public class Main extends Application {
 
     private void refresh() {
         enemies = currentMap.getEnemiesOnCurrentMap();
-        if (currentMap.getPlayer().isOnDoorDown()){
+        if (currentMap.getPlayer().isOnDoorDown()) {
             Player currentPlayer = currentMap.getPlayer();
             currentMapIndex++;
             currentMap = maps.get(currentMapIndex);
@@ -365,7 +375,7 @@ public class Main extends Application {
                 Cell cell = currentMap.getCell(x, y);
                 if (cell.getActor() != null) {
                     Tiles.drawTile(context, cell.getActor(), centeredX, centeredY);
-                }else if (cell.getItem() != null) {
+                } else if (cell.getItem() != null) {
                     Tiles.drawTile(context, cell.getItem(), centeredX, centeredY);
                 } else {
                     Tiles.drawTile(context, cell, centeredX, centeredY);
@@ -377,16 +387,17 @@ public class Main extends Application {
         List<Item> fullInventory = currentMap.getPlayer().getInventory();
         inventoryLabel.setText("");
         for (Item item : fullInventory) {
-            inventoryLabel.setText("" +inventoryLabel.getText() + "\n" + item.getTileName());
+            inventoryLabel.setText("" + inventoryLabel.getText() + "\n" + item.getTileName());
         }
 
     }
 
-    private void addMaps(){
+    private void addMaps() {
         String[] mapFiles = {"/map1.txt", "/map2.txt", "/map3.txt"};
         for (String mapFile : mapFiles) {
             maps.add(MapLoader.loadMap(mapFile));
         }
+
     }
 
 
@@ -397,6 +408,67 @@ public class Main extends Application {
         } catch (SQLException ex) {
             System.out.println("Cannot connect to database.");
         }
+    }
+
+    public void addMapsOnLoad(String playerName) {
+        GameDatabaseManager gameDatabaseManager = new GameDatabaseManager();
+        List<GameState> gameMaps = gameDatabaseManager.loadGameMaps(playerName);
+        for (GameState gameMap : gameMaps) {
+            String map1 = gameMap.getMap1();
+            String map2 = gameMap.getMap2();
+            String map3 = gameMap.getMap3();
+            maps.add(MapLoader.loadMap(map1));
+            maps.add(MapLoader.loadMap(map2));
+            maps.add(MapLoader.loadMap(map3));
+        }
+    }
+
+    public void changePlayerStats(Player player) {
+        GameDatabaseManager gameDatabaseManager = new GameDatabaseManager();
+        PlayerModel playerModel = gameDatabaseManager.loadPlayer(player.getName());
+        player.setName(playerModel.getPlayerName());
+        player.setStrength(playerModel.getStrength());
+        player.setHealth(playerModel.getHealth());
+        addItemsToLoadedPlayer(gameDatabaseManager,player);
+
+    }
+
+    private void addItemsToLoadedPlayer(GameDatabaseManager gameDatabaseManager, Player player) {
+        player.clearInventory();
+        List<ItemModel> itemModels = gameDatabaseManager.loadInventory(player.getName());
+        for (ItemModel itemModel : itemModels) {
+            player.addItemToInventoryOnLoad(createItem(itemModel.getItemType(), itemModel.getItemName()));
+        }
+    }
+
+    public Item createItem(String type, String name) {
+        if (type.equals("Key")) {
+            switch (name) {
+                case "bronze":
+                    return new Key(null, KeyType.BRONZE_KEY);
+                case "silver":
+                    return new Key(null, KeyType.SILVER_KEY);
+            }
+        } else if (type.equals("Potion")) {
+            switch (name) {
+                case "strong healing potion":
+                    return new Potion(null, PotionType.STRONG_HEALTH_POTION);
+                case "weak healing potion":
+                    return new Potion(null, PotionType.WEAK_HEALTH_POTION);
+                case "extra healing potion":
+                    return new Potion(null, PotionType.EXTRA_HEALTH_POTION);
+            }
+        } else if (type.equals("Weapon")) {
+            switch (name) {
+                case "crossbow":
+                    return new Weapon(null, WeaponType.CROSSBOW);
+                case "sword":
+                    return new Weapon(null, WeaponType.SWORD);
+                case "axe":
+                    return new Weapon(null, WeaponType.AXE);
+            }
+        }
+        return null;
     }
 
     private void exit() {

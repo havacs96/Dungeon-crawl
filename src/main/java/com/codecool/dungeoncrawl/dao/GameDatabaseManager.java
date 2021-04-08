@@ -27,6 +27,31 @@ public class GameDatabaseManager {
 
     }
 
+    public List<String> loadSaves(){
+        List<String> playerNames = new ArrayList<>();
+        for (PlayerModel playerModel : playerDao.getAll()) {
+            playerNames.add(playerModel.getPlayerName());
+        };
+        return playerNames;
+    }
+
+    public List<GameState> loadGameMaps(String playerName){
+        int id = playerDao.getId(playerName);
+        PlayerModel playerModel = playerDao.get(id);
+        return gameStateDao.getAll(playerModel);
+    }
+
+    public List<ItemModel> loadInventory(String playerName){
+        int id = playerDao.getId(playerName);
+        PlayerModel playerModel = playerDao.get(id);
+        return playerInventoryDao.getAllPlayerItems(playerModel);
+    }
+
+    public PlayerModel loadPlayer(String playerName){
+        int id = playerDao.getId(playerName);
+        return playerDao.get(id);
+    }
+
     public void save(Player player, List<GameMap> gameMaps) {
         PlayerModel playerModel = new PlayerModel(player);
         playerDao.add(playerModel);
