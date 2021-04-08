@@ -49,7 +49,7 @@ public class Main extends Application {
     MenuBar menuBar = new MenuBar();
     GameDatabaseManager dbManager;
 
-    public static void main(String[] args) {
+    public void main(String[] args) {
         launch(args);
     }
 
@@ -249,7 +249,7 @@ public class Main extends Application {
                 break;
             case S:
                 Player player = currentMap.getPlayer();
-                dbManager.savePlayer(player);
+                dbManager.save(player, maps);
                 break;
         }
     }
