@@ -371,11 +371,13 @@ public class Main extends Application {
 
         loadGame.setScene(scene1);
         loadGame.show();
-        maps.clear();
-        addMapsOnLoad(chosenName.getText());
-        changePlayerStats(currentMap.getPlayer());
-        refresh();
 
+        if (dbManager.loadPlayer(currentMap.getPlayer().getName()) != null) {
+            maps.clear();
+            changePlayerStats(currentMap.getPlayer());
+            addMapsOnLoad(chosenName.getText());
+            refresh();
+        }
     }
 
 
@@ -458,12 +460,12 @@ public class Main extends Application {
     }
 
     public void changePlayerStats(Player player) {
-        GameDatabaseManager gameDatabaseManager = new GameDatabaseManager();
-        PlayerModel playerModel = gameDatabaseManager.loadPlayer(player.getName());
+        PlayerModel playerModel = dbManager.loadPlayer(player.getName());
+        System.out.println(playerModel);
         player.setName(playerModel.getPlayerName());
         player.setStrength(playerModel.getStrength());
         player.setHealth(playerModel.getHealth());
-        addItemsToLoadedPlayer(gameDatabaseManager,player);
+        addItemsToLoadedPlayer(dbManager,player);
 
     }
 

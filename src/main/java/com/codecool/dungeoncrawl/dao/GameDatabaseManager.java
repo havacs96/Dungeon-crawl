@@ -38,17 +38,22 @@ public class GameDatabaseManager {
     public List<GameState> loadGameMaps(String playerName){
         int id = playerDao.getId(playerName);
         PlayerModel playerModel = playerDao.get(id);
+        System.out.println(playerName);
+        System.out.println(id);
+        System.out.println(playerModel);
         return gameStateDao.getAll(playerModel, id);
     }
 
     public List<ItemModel> loadInventory(String playerName){
         int id = playerDao.getId(playerName);
         PlayerModel playerModel = playerDao.get(id);
-        return playerInventoryDao.getAllPlayerItems(playerModel);
+        return playerInventoryDao.getAllPlayerItems(playerModel, id);
     }
 
     public PlayerModel loadPlayer(String playerName){
         int id = playerDao.getId(playerName);
+        System.out.println(id);
+        System.out.println(playerDao.get(id));
         return playerDao.get(id);
     }
 
@@ -64,7 +69,6 @@ public class GameDatabaseManager {
         playerDao.update(playerModel);
         int playerID = playerDao.getId(player.getName());
         for (Item item : player.getInventory()) {
-            System.out.println(playerModel);
             ItemModel itemModel = new ItemModel(item,playerID);
             playerInventoryDao.remove(itemModel);
         };

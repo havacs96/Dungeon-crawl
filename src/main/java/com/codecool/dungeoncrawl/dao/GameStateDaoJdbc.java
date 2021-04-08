@@ -84,20 +84,27 @@ public class GameStateDaoJdbc implements GameStateDao {
         try (Connection conn = dataSource.getConnection()) {
             String sql =    "SELECT current_map, map1, map2, map3, saved_at " +
                             "FROM game_state " +
-                            "WHERE player_id = ?";
+                            "WHERE player_id = ? ";
             PreparedStatement statement = conn.prepareStatement(sql);
+            System.out.println("10");
             statement.setInt(1, id);
-            ResultSet rs = statement.executeQuery(sql);
+            System.out.println(id);
+            ResultSet rs = statement.executeQuery();
+            System.out.println("12");
             List<GameState> GameStates = new ArrayList<>();
-
+            System.out.println("13");
             if (!rs.isBeforeFirst()) {
                 return null;
             }
-
+            System.out.println("14");
             while(!rs.next()){
+                System.out.println("15");
                 Timestamp savedAt = rs.getTimestamp(5);
+                System.out.println("16");
                 String map1 = rs.getString(2);
+                System.out.println("17");
                 String map2 = rs.getString(3);
+                System.out.println("18");
                 String map3 = rs.getString(4);
 
                 GameState state = new GameState(map1, map2, map3, player.getId());

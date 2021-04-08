@@ -47,14 +47,17 @@ public class PlayerInventoryDaoJdbc implements PlayerInventoryDao{
         }
     }
 
-    public List<ItemModel> getAllPlayerItems(PlayerModel player) {
+    public List<ItemModel> getAllPlayerItems(PlayerModel player, int id) {
         try (Connection conn = dataSource.getConnection()) {
             String sql = "SELECT player_id, item_name, item_type FROM player_inventory WHERE player_id = ?";
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setInt(1, player.getId());
-            ResultSet rs = statement.executeQuery(sql);
+            System.out.println(id);
+            statement.setInt(1, id);
+            System.out.println("2");
+            ResultSet rs = statement.executeQuery();
+            System.out.println("3");
             List<ItemModel> itemModels = new ArrayList<>();
-
+            System.out.println("4");
             if (!rs.isBeforeFirst()) {
                 return null;
             }
