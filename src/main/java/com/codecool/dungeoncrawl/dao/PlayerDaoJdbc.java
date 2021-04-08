@@ -30,6 +30,7 @@ public class PlayerDaoJdbc implements PlayerDao {
             ResultSet resultSet = statement.getGeneratedKeys();
             resultSet.next();
             player.setId(resultSet.getInt(1));
+            System.out.println(resultSet.getInt(1));
         } catch (SQLException e) {
             throw new RuntimeException("Error while adding a new player",e);
         }

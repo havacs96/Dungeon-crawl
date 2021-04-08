@@ -40,7 +40,7 @@ public class GameStateDaoJdbc implements GameStateDao {
     public void update(GameState state) {
         try (Connection conn = dataSource.getConnection()) {
             String sql = "UPDATE game_state SET current_map = ?, map1 = ?, map2 = ?, map3 = ?, saved_at = ? " +
-                    "WHERE player_id LIKE ?";
+                    "WHERE player_id = ?";
             PreparedStatement st = conn.prepareStatement(sql);
             st.setInt(1, state.getCurrentMap());
             st.setString(2, state.getMap1());

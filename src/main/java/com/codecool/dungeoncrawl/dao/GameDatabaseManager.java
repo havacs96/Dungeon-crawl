@@ -62,12 +62,14 @@ public class GameDatabaseManager {
     public void update(Player player, List<GameMap> gameMaps, int currentMapIndex){
         PlayerModel playerModel = new PlayerModel(player);
         playerDao.update(playerModel);
+        int playerID = playerDao.getId(player.getName());
         for (Item item : player.getInventory()) {
-            ItemModel itemModel = new ItemModel(item,playerModel.getId());
+            System.out.println(playerModel);
+            ItemModel itemModel = new ItemModel(item,playerID);
             playerInventoryDao.remove(itemModel);
         };
         for (Item item : player.getInventory()) {
-            ItemModel itemModel = new ItemModel(item,playerModel.getId());
+            ItemModel itemModel = new ItemModel(item,playerID);
             playerInventoryDao.add(itemModel);
         };
         List<String> stringMaps = new ArrayList<>();
