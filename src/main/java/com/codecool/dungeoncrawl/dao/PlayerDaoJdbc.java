@@ -61,9 +61,14 @@ public class PlayerDaoJdbc implements PlayerDao {
             PreparedStatement st = conn.prepareStatement(sql);
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
+            if (!rs.isBeforeFirst()) {
+                return null;
+            }
             if(!rs.next()){
                 return null;
             }
+
+
             Player player = new Player(null);
             player.setName(rs.getString(1));
             player.setStrength(rs.getInt(2));

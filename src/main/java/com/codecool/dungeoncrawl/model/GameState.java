@@ -1,50 +1,64 @@
 package com.codecool.dungeoncrawl.model;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.sql.Date;
 import java.util.List;
 
 public class GameState extends BaseModel {
-    private Date savedAt;
-    private String currentMap;
-    private List<String> discoveredMaps = new ArrayList<>();
-    private PlayerModel player;
+    private Timestamp savedAt;
+    private int currentMap;
+    private String map1;
+    private String map2;
+    private String map3;
+    private int playerID;
 
-    public GameState(String currentMap, Date savedAt, PlayerModel player) {
-        this.currentMap = currentMap;
+    public GameState(Timestamp savedAt, String map1, String map2, String map3, int playerID) {
         this.savedAt = savedAt;
-        this.player = player;
+        this.map1 = map1;
+        this.map2 = map2;
+        this.map3 = map3;
+        this.playerID = playerID;
     }
 
-    public Date getSavedAt() {
+    public Timestamp getSavedAt() {
         return savedAt;
     }
 
-    public void setSavedAt(Date savedAt) {
+    public void setSavedAt(Timestamp savedAt) {
         this.savedAt = savedAt;
     }
 
-    public String getCurrentMap() {
+    public int getCurrentMap () {
         return currentMap;
     }
 
-    public void setCurrentMap(String currentMap) {
+    public int getCurrentMap(String text) {
+        String numberOnly = text.replaceAll("[^0-9]", "");
+        return Integer.parseInt(numberOnly);
+    }
+
+    public void setCurrentMap(int currentMap) {
         this.currentMap = currentMap;
     }
 
-    public List<String> getDiscoveredMaps() {
-        return discoveredMaps;
+    public int getPlayerID() {
+        return playerID;
     }
 
-    public void addDiscoveredMap(String map) {
-        this.discoveredMaps.add(map);
+    public void setPlayerID(int playerID) {
+        this.playerID = playerID;
     }
 
-    public PlayerModel getPlayer() {
-        return player;
+    public String getMap1() {
+        return map1;
     }
 
-    public void setPlayer(PlayerModel player) {
-        this.player = player;
+    public String getMap2() {
+        return map2;
+    }
+
+    public String getMap3() {
+        return map3;
     }
 }
