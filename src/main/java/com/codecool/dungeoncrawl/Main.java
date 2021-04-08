@@ -110,6 +110,7 @@ public class Main extends Application {
         submitButton.setOnAction(action -> {
             String inputName = textField.getText();
             name.setText(inputName);
+            name.setTextFill(Color.web("#ffffff", 1));
             currentMap.getPlayer().setName(inputName);
             ui.getChildren().remove(hbox);
 
@@ -170,6 +171,7 @@ public class Main extends Application {
             inventoryLabel.setText("");
             for (Item item : fullInventory) {
                 inventoryLabel.setText("" + inventoryLabel.getText() + "\n" + item.getTileName());
+                inventoryLabel.setTextFill(Color.web("#ffffff", 1));
             }
 
         });
@@ -258,8 +260,6 @@ public class Main extends Application {
                 if (keyEvent.isControlDown()) {
                     if(!dbManager.isPlayerExistsInDb(currentMap.getPlayer().getName())){
                         dbManager.save(currentMap.getPlayer(), maps);
-
-
                     }else {
                         isSave(currentMap.getPlayer());
                     }
