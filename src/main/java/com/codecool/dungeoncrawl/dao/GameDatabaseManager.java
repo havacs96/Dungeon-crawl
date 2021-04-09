@@ -29,6 +29,7 @@ public class GameDatabaseManager {
 
     public List<String> loadSaves(){
         List<String> playerNames = new ArrayList<>();
+        System.out.println(playerDao.getAll());
         for (PlayerModel playerModel : playerDao.getAll()) {
             playerNames.add(playerModel.getPlayerName());
         };
@@ -38,9 +39,6 @@ public class GameDatabaseManager {
     public List<GameState> loadGameMaps(String playerName){
         int id = playerDao.getId(playerName);
         PlayerModel playerModel = playerDao.get(id);
-        System.out.println(playerName);
-        System.out.println(id);
-        System.out.println(playerModel);
         return gameStateDao.getAll(playerModel, id);
     }
 

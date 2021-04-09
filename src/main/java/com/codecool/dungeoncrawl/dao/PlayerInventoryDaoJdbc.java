@@ -1,5 +1,6 @@
 package com.codecool.dungeoncrawl.dao;
 
+import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.items.*;
 import com.codecool.dungeoncrawl.model.ItemModel;
@@ -51,19 +52,15 @@ public class PlayerInventoryDaoJdbc implements PlayerInventoryDao{
         try (Connection conn = dataSource.getConnection()) {
             String sql = "SELECT player_id, item_name, item_type FROM player_inventory WHERE player_id = ?";
             PreparedStatement statement = conn.prepareStatement(sql);
-            System.out.println(id);
             statement.setInt(1, id);
-            System.out.println("2");
             ResultSet rs = statement.executeQuery();
-            System.out.println("3");
             List<ItemModel> itemModels = new ArrayList<>();
-            System.out.println("4");
             if (!rs.isBeforeFirst()) {
                 return null;
             }
 
-            while(!rs.next()){
-                ItemModel itemModel = new ItemModel(createDifferentItems(rs.getString(3), rs.getString(2)), player.getId());
+            while(rs.next()){
+                ItemModel itemModel = new ItemModel(createDifferentItems(rs.getString(3), rs.getString(2)), id);
                 itemModels.add(itemModel);
             }
             return itemModels;
@@ -74,25 +71,26 @@ public class PlayerInventoryDaoJdbc implements PlayerInventoryDao{
     }
 
     public Item createDifferentItems(String itemType, String itemName) {
+        Cell cell = new Cell(null,1000,1000,null);
         switch (itemType) {
             case "Key":
                 for (KeyType keyType : KeyType.values()) {
                     if (keyType.getKeyName().equals(itemName)) {
-                        return new Key(null, keyType);
+                        return new Key(cell, keyType);
                     }
                 }
                 break;
             case "Weapon":
                 for (WeaponType weaponType : WeaponType.values()) {
                     if (weaponType.getWeaponName().equals(itemName)) {
-                        return new Weapon(null, weaponType);
+                        return new Weapon(cell, weaponType);
                     }
                 }
                 break;
             case "Potion":
                 for (PotionType potionType : PotionType.values()) {
                     if (potionType.getPotionName().equals(itemName)) {
-                        return new Potion(null, potionType);
+                        return new Potion(cell, potionType);
                     }
                 }
                 break;
