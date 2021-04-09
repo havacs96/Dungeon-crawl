@@ -85,7 +85,7 @@ public class Main extends Application {
         MenuItem fileSeparator = new SeparatorMenuItem();
         MenuItem fileExit = new MenuItem("Exit");
         fileExit.setOnAction(e -> Platform.exit());
-        fileLoad.setOnAction(e -> loadGame());
+        fileLoad.setOnAction(e -> loadGame(currentMap.getPlayer()));
 
         file.getItems().addAll(fileRestart, fileSave, fileLoad, fileSeparator, fileExit);
 
@@ -258,12 +258,13 @@ public class Main extends Application {
                 break;
             case S:
                 if (keyEvent.isControlDown()) {
-                    if(!dbManager.isPlayerExistsInDb(currentMap.getPlayer().getName())){
+                    if (!dbManager.isPlayerExistsInDb(currentMap.getPlayer().getName())) {
                         dbManager.save(currentMap.getPlayer(), maps);
-                    }else {
+                    } else {
                         isSave(currentMap.getPlayer());
                     }
                 }
+                savedGameModal();
                 break;
             case M:
                 showMiniMap();
@@ -306,6 +307,26 @@ public class Main extends Application {
         confirmWindow.showAndWait();
     }
 
+    public void savedGameModal() {
+        Stage savedGame = new Stage();
+
+        savedGame.initModality(Modality.APPLICATION_MODAL);
+        savedGame.setTitle("Saved Game");
+
+        Label saveLabel = new Label();
+        saveLabel.setText("Successfully saved the Game!");
+        VBox layout = new VBox(10);
+
+        layout.getChildren().addAll(saveLabel);
+        layout.setAlignment(Pos.CENTER);
+
+        Scene scene1 = new Scene(layout, 499, 400);
+
+        savedGame.setScene(scene1);
+        savedGame.show();
+    }
+
+
     private void showMiniMap() {
 
         Stage MiniMap = new Stage();
@@ -326,13 +347,11 @@ public class Main extends Application {
         view2.setPreserveRatio(true);
         view3.setPreserveRatio(true);
 
-        if (currentMapIndex == 0){
+        if (currentMapIndex == 0) {
             map1.setGraphic(view1);
-        }
-        else if (currentMapIndex == 1){
+        } else if (currentMapIndex == 1) {
             map1.setGraphic(view2);
-        }
-        else if (currentMapIndex == 2) {
+        } else if (currentMapIndex == 2) {
             map1.setGraphic(view3);
         }
 
@@ -349,7 +368,7 @@ public class Main extends Application {
     }
 
 
-    private void loadGame() {
+    private void loadGame(Player player) {
 
         Stage loadGame = new Stage();
 
@@ -361,23 +380,38 @@ public class Main extends Application {
         Label load = new Label();
         Label names = new Label();
         for (String name : dbManager.loadSaves()) {
-            names.setText(names + "\n" + name);
+            names.setText(names.getText() + "\n" + name);
         }
         TextField chosenName = new TextField();
-        layout.getChildren().addAll(load, names, chosenName);
+        Button confirm = new Button("Choose");
+
+        confirm.setOnAction(e -> {
+
+            maps.clear();
+            player.setName(chosenName.getText());
+            name.setText(player.getName());
+            changePlayerStats(currentMap.getPlayer(), chosenName.getText());
+            healthLabel.setText("" + currentMap.getPlayer().getHealth());
+            strengthLabel.setText("" + currentMap.getPlayer().getStrength());
+            List<Item> fullInventory = currentMap.getPlayer().getInventory();
+            inventoryLabel.setText("");
+            for (Item item : fullInventory) {
+                inventoryLabel.setText("" + inventoryLabel.getText() + "\n" + item.getTileName());
+            }
+            addMapsOnLoad(chosenName.getText());
+            currentMap = maps.get(currentMapIndex);
+            loadGame.close();
+            refresh();
+
+        });
+
+        layout.getChildren().addAll(load, names, chosenName, confirm);
 
         layout.setAlignment(Pos.CENTER);
         Scene scene1 = new Scene(layout, 300, 300);
 
         loadGame.setScene(scene1);
         loadGame.show();
-
-        if (dbManager.loadPlayer(currentMap.getPlayer().getName()) != null) {
-            maps.clear();
-            changePlayerStats(currentMap.getPlayer());
-            addMapsOnLoad(chosenName.getText());
-            refresh();
-        }
     }
 
 
@@ -456,52 +490,55 @@ public class Main extends Application {
             maps.add(MapLoader.loadMap(map1));
             maps.add(MapLoader.loadMap(map2));
             maps.add(MapLoader.loadMap(map3));
+            currentMapIndex = gameMap.getCurrentMap();
         }
     }
 
-    public void changePlayerStats(Player player) {
-        PlayerModel playerModel = dbManager.loadPlayer(player.getName());
-        System.out.println(playerModel);
+    public void changePlayerStats(Player player, String newName) {
+        PlayerModel playerModel = dbManager.loadPlayer(newName);
         player.setName(playerModel.getPlayerName());
         player.setStrength(playerModel.getStrength());
         player.setHealth(playerModel.getHealth());
-        addItemsToLoadedPlayer(dbManager,player);
+        addItemsToLoadedPlayer(player);
 
     }
 
-    private void addItemsToLoadedPlayer(GameDatabaseManager gameDatabaseManager, Player player) {
+    private void addItemsToLoadedPlayer(Player player) {
         player.clearInventory();
-        List<ItemModel> itemModels = gameDatabaseManager.loadInventory(player.getName());
-        for (ItemModel itemModel : itemModels) {
-            player.addItemToInventoryOnLoad(createItem(itemModel.getItemType(), itemModel.getItemName()));
+        List<ItemModel> itemModels = dbManager.loadInventory(player.getName());
+        if (itemModels != null) {
+            for (ItemModel itemModel : itemModels) {
+                player.addItemToInventoryOnLoad(createItem(itemModel.getItemType(), itemModel.getItemName()));
+            }
         }
     }
 
     public Item createItem(String type, String name) {
+        Cell cell = new Cell(null, 1000, 1000, null);
         if (type.equals("Key")) {
             switch (name) {
                 case "bronze":
-                    return new Key(null, KeyType.BRONZE_KEY);
+                    return new Key(cell, KeyType.BRONZE_KEY);
                 case "silver":
-                    return new Key(null, KeyType.SILVER_KEY);
+                    return new Key(cell, KeyType.SILVER_KEY);
             }
         } else if (type.equals("Potion")) {
             switch (name) {
                 case "strong healing potion":
-                    return new Potion(null, PotionType.STRONG_HEALTH_POTION);
+                    return new Potion(cell, PotionType.STRONG_HEALTH_POTION);
                 case "weak healing potion":
-                    return new Potion(null, PotionType.WEAK_HEALTH_POTION);
+                    return new Potion(cell, PotionType.WEAK_HEALTH_POTION);
                 case "extra healing potion":
-                    return new Potion(null, PotionType.EXTRA_HEALTH_POTION);
+                    return new Potion(cell, PotionType.EXTRA_HEALTH_POTION);
             }
         } else if (type.equals("Weapon")) {
             switch (name) {
                 case "crossbow":
-                    return new Weapon(null, WeaponType.CROSSBOW);
+                    return new Weapon(cell, WeaponType.CROSSBOW);
                 case "sword":
-                    return new Weapon(null, WeaponType.SWORD);
+                    return new Weapon(cell, WeaponType.SWORD);
                 case "axe":
-                    return new Weapon(null, WeaponType.AXE);
+                    return new Weapon(cell, WeaponType.AXE);
             }
         }
         return null;

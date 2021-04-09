@@ -95,8 +95,7 @@ public class PlayerDaoJdbc implements PlayerDao {
             if (!rs.isBeforeFirst()) {
                 return null;
             }
-            while(!rs.next()){
-
+            while(rs.next()){
                 String playerName = rs.getString(1);
                 int x = rs.getInt(4);
                 int y = rs.getInt(5);
@@ -107,6 +106,7 @@ public class PlayerDaoJdbc implements PlayerDao {
                 playerModel.setHealth(rs.getInt(3));
                 playerModel.setX(rs.getInt(4));
                 playerModel.setY(rs.getInt(5));
+                playerModels.add(playerModel);
             }
             return playerModels;
 
