@@ -63,7 +63,7 @@ public class Main extends Application {
 
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         setupDbManager();
         addMaps();
         currentMap = maps.get(currentMapIndex);
@@ -71,6 +71,7 @@ public class Main extends Application {
                 currentMap.getWidth() * Tiles.TILE_WIDTH,
                 currentMap.getHeight() * Tiles.TILE_WIDTH);
         context = canvas.getGraphicsContext2D();
+
 
 
         Menu file = new Menu("File");
@@ -89,74 +90,81 @@ public class Main extends Application {
 
         file.getItems().addAll(fileRestart, fileSave, fileLoad, fileSeparator, fileExit);
 
-        VBox root = new VBox(menuBar);
 
+        createMenu();
+
+        VBox root = new VBox(menuBar);
 
         // ui
         changeGridColor();
 
-
         ui.setPrefWidth(300);
         ui.setPadding(new Insets(10));
 
+        createPane();
+        createLabels();
 
-        final Pane spring = new Pane();
+        BorderPane borderPane = new BorderPane();
 
+        borderPane.setCenter(canvas);
+        borderPane.setRight(ui);
+        borderPane.setTop(root);
 
-        TextField textField = new TextField();
-        HBox hbox = new HBox(textField, submitButton);
-        ui.add(hbox, 0, 0);
+        Scene scene = new Scene(borderPane);
 
-        submitButton.setOnAction(action -> {
-            String inputName = textField.getText();
-            name.setText(inputName);
-            name.setTextFill(Color.web("#ffffff", 1));
-            currentMap.getPlayer().setName(inputName);
-            ui.getChildren().remove(hbox);
+        primaryStage.setScene(scene);
+        refresh();
+        scene.setOnKeyPressed(this::onKeyPressed);
+        scene.setOnKeyReleased(this::onKeyReleased);
 
-            Label label = new Label();
-            label.setText("Player's name: ");
-            label.setTextFill(Color.web("#ffffff", 1));
-            ui.add(label, 0, 0);
-            ui.add(name, 1, 0);
+        primaryStage.setTitle("Dungeon Crawl by Code of the LordCool!");
+        primaryStage.show();
+    }
 
-        });
-
+    private void createLabels() {
         Label healthLabelText = new Label();
         healthLabelText.setText("Health: ");
         healthLabelText.setTextFill(Color.web("#ffffff", 1));
+
         ui.add(healthLabelText, 0, 1);
+
         healthLabel.setTextFill(Color.web("#ffffff", 1));
+
         ui.add(healthLabel, 1, 1);
 
         Label strLabelText = new Label();
         strLabelText.setText("Strength: ");
         strLabelText.setTextFill(Color.web("#ffffff", 1));
+
         ui.add(strLabelText, 0, 2);
+
         strengthLabel.setTextFill(Color.web("#ffffff", 1));
+
         ui.add(strengthLabel, 1, 2);
 
         Label label1 = new Label();
         label1.setText("Use weak health \n potion with key: w \n\n");
         label1.setTextFill(Color.web("#ffffff", 1));
+
         ui.add(label1, 0, 3);
 
         Label label2 = new Label();
         label2.setText("Use strong health \n potion with key: a \n");
         label2.setTextFill(Color.web("#ffffff", 1));
+
         ui.add(label2, 0, 4);
 
         Label label3 = new Label();
         label3.setText("Use extra health \n potion with key: e \n\n");
         label3.setTextFill(Color.web("#ffffff", 1));
-        ui.add(label3, 0, 5);
 
+        ui.add(label3, 0, 5);
         ui.add(button, 0, 6);
-        ui.add(spring, 0, 7);
 
         Label label4 = new Label();
         label4.setText("Inventory: ");
         label4.setTextFill(Color.web("#ffffff", 1));
+
         ui.add(label4, 0, 8);
         ui.add(inventoryLabel, 0, 9);
 
@@ -175,22 +183,48 @@ public class Main extends Application {
             }
 
         });
+    }
 
-        BorderPane borderPane = new BorderPane();
+    private void createMenu() {
+        Menu file = new Menu("File");
+        Menu authors = new Menu("Authors");
+        Menu help = new Menu("Help");
+        MenuBar menuBar = new MenuBar();
+        menuBar.getMenus().addAll(file, authors, help);
 
-        borderPane.setCenter(canvas);
-        borderPane.setRight(ui);
-        borderPane.setTop(root);
+        MenuItem fileRestart = new MenuItem("Restart");
+        MenuItem fileSave = new MenuItem("Save");
+        MenuItem fileLoad = new MenuItem("Load");
+        MenuItem fileSeparator = new SeparatorMenuItem();
+        MenuItem fileExit = new MenuItem("Exit");
+        fileExit.setOnAction(e -> Platform.exit());
+        fileLoad.setOnAction(e -> loadGame());
 
-        Scene scene = new Scene(borderPane);
+        file.getItems().addAll(fileRestart, fileSave, fileLoad, fileSeparator, fileExit);
+    }
 
-        primaryStage.setScene(scene);
-        refresh();
-        scene.setOnKeyPressed(this::onKeyPressed);
-        scene.setOnKeyReleased(this::onKeyReleased);
+    private void createPane() {
+        final Pane spring = new Pane();
 
-        primaryStage.setTitle("Dungeon Crawl by Code of the LordCool!");
-        primaryStage.show();
+        TextField textField = new TextField();
+        HBox hbox = new HBox(textField, submitButton);
+        ui.add(hbox, 0, 0);
+        ui.add(spring, 0, 7);
+
+        submitButton.setOnAction(action -> {
+            String inputName = textField.getText();
+            name.setText(inputName);
+            name.setTextFill(Color.web("#ffffff", 1));
+            currentMap.getPlayer().setName(inputName);
+            ui.getChildren().remove(hbox);
+
+            Label label = new Label();
+            label.setText("Player's name: ");
+            label.setTextFill(Color.web("#ffffff", 1));
+            ui.add(label, 0, 0);
+            ui.add(name, 1, 0);
+
+        });
     }
 
     private void onKeyReleased(KeyEvent keyEvent) {
